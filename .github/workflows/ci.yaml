@@ -57,7 +57,7 @@ jobs:
 
       - name: Run database migrations
         run: |
-          if php bin/console doctrine:migrations:status | grep 'Available Migrations: 0'; then
+          if php bin/console doctrine:migrations:up-to-date; then
             echo "No migrations to run."
           else
             php bin/console doctrine:migrations:migrate --no-interaction
