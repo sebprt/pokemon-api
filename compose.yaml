@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - database
+    user: "1000:1000"
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - .:/var/www/html
+      - ./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8080:80"
+    depends_on:
+      - php
+
+  database:
+    image: postgres
+    restart: always
+    volumes:
+     - database-data:/var/lib/postgresql/data
+    environment:
+     - POSTGRES_DB=example
+     - POSTGRES_PASSWORD=example
+     - POSTGRES_USER=example
+    ports:
+     - "5432:5432"
+
+volumes:
+  database-data:
