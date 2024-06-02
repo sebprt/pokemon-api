@@ -18,13 +18,9 @@ RUN wget https://get.symfony.com/cli/installer -O - | bash \
 
 WORKDIR /var/www/html
 
-RUN chown -R www-data:www-data /var/www/html
+COPY  . .
 
-USER www-data
-
-COPY --chown=www-data:www-data . .
-
-RUN composer install --optimize-autoloader
+RUN composer install --no-plugins --no-scripts --optimize-autoloader
 
 EXPOSE 9000
 
