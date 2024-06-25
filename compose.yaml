@@ -9,6 +9,8 @@ services:
       - .:/var/www/html
     depends_on:
       - database
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   nginx:
     image: nginx:latest
