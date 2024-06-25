@@ -11,10 +11,14 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     && docker-php-ext-install intl opcache pdo pdo_pgsql zip
 
-RUN pecl install xdebug && \
-    docker-php-ext-enable xdebug
+RUN if [ "$APP_ENV" = "dev" ] || [ "$APP_ENV" = "test" ]; then \
+    pecl install xdebug && docker-php-ext-enable xdebug; \
+    fi
 
-RUN echo "memory_limit = -1" >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini
+RUN if [ "$APP_ENV" = "dev" ] || [ "$APP_ENV" = "test" ]; then \
+    echo "memory_limit=-1" > /usr/local/etc/php/conf.d/memory-limit.ini; \
+    fi
+
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
