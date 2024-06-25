@@ -11,20 +11,18 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     && docker-php-ext-install intl opcache pdo pdo_pgsql zip
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+RUN pecl install xdebug && \
+    docker-php-ext-enable xdebug
 
-RUN wget https://get.symfony.com/cli/installer -O - | bash \
-    && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
+RUN echo "memory_limit = -1" >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-RUN chown -R www-data:www-data /var/www/html
+COPY  . .
 
-USER www-data
-
-COPY --chown=www-data:www-data . .
-
-RUN composer install --optimize-autoloader
+RUN composer install --no-plugins --no-scripts --optimize-autoloader
 
 EXPOSE 9000
 

@@ -1,0 +1,7 @@
+resources:
+  App\Entity\Pokemon:
+    operations:
+      ApiPlatform\Metadata\GetCollection:
+        uriTemplate: /pokemons
+      ApiPlatform\Metadata\Get:
+        uriTemplate: /pokemons/{id}
