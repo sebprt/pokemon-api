@@ -7,10 +7,8 @@ namespace App\Tests\Scheduler\Handler;
 use App\Scheduler\Handler\UpdateDailyPokemonTableHandler;
 use App\Scheduler\Message\UpdateDailyPokemonTable;
 use Doctrine\ORM\EntityManagerInterface;
-use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\HttpClient\NativeHttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class UpdateDailyPokemonTableTest extends KernelTestCase
@@ -20,6 +18,7 @@ class UpdateDailyPokemonTableTest extends KernelTestCase
         self::bootKernel();
     }
 
+    /** Todo : improve this test */
     public function testUpdatePokemonHandler(): void
     {
         $container = self::getContainer();
@@ -32,6 +31,6 @@ class UpdateDailyPokemonTableTest extends KernelTestCase
 
         $handler(new UpdateDailyPokemonTable());
 
-        $this->assertStringContainsString('Mise à jour réussie.', $output);
+        $this->assertStringContainsString('Mise à jour réussie.', '$output');
     }
 }
