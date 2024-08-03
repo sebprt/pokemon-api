@@ -3,5 +3,14 @@ resources:
     operations:
       ApiPlatform\Metadata\GetCollection:
         uriTemplate: /pokemons
+      ApiPlatform\Metadata\Post:
+        uriTemplate: /pokemons/{id}
       ApiPlatform\Metadata\Get:
         uriTemplate: /pokemons/{id}
+      ApiPlatform\Metadata\Put:
+        uriTemplate: /pokemons/{id}
+      ApiPlatform\Metadata\Patch:
+        uriTemplate: /pokemons/{id}
+      ApiPlatform\Metadata\Delete:
+        uriTemplate: /pokemons/{id}
+  App\Entity\Game: ~

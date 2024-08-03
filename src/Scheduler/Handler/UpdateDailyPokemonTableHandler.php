@@ -44,9 +44,9 @@ readonly class UpdateDailyPokemonTableHandler
                 $pokemon = new Pokemon();
             }
 
-            $pokemon->setPokedexId($result['id']);
+            $pokemon->setId($result['id']);
             $pokemon->setName($result['name']);
-            $pokemon->setImage($result['sprites']['other']['home']['front_default'] ?? "");
+            $pokemon->setImage($result['sprites']['other']['home']['front_default'] ?? '');
             $pokemon->setCry($result['cries']['legacy'] ?? '');
 
             $this->entityManager->persist($pokemon);
