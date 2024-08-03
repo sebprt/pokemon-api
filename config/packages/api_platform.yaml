@@ -2,6 +2,7 @@ api_platform:
     title: Pokemon API
     version: 1.0.0
     formats:
+        jsonld: ['application/ld+json']
         json: ['application/json']
     docs_formats:
         json: ['application/json']

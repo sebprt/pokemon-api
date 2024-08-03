@@ -3,19 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\PokemonRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PokemonRepository::class)]
 class Pokemon
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\Column(type: Types::INTEGER)]
-    private ?int $pokedexId = null;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -31,14 +26,9 @@ class Pokemon
         return $this->id;
     }
 
-    public function getPokedexId(): ?int
+    public function setId(int $id): static
     {
-        return $this->pokedexId;
-    }
-
-    public function setPokedexId(int $number): static
-    {
-        $this->pokedexId = $number;
+        $this->id = $id;
 
         return $this;
     }
