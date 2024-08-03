@@ -4,12 +4,15 @@ namespace App\Entity;
 
 use App\Repository\PokemonRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 
 #[ORM\Entity(repositoryClass: PokemonRepository::class)]
 class Pokemon
 {
     #[ORM\Id]
     #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
