@@ -16,7 +16,7 @@ final class GameFactory extends PersistentProxyObjectFactory
     {
         return [
             'description' => self::faker()->text(),
-            'name' => self::faker()->text(255),
+            'name' => self::faker()->word(),
         ];
     }
 }

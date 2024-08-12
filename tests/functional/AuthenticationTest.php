@@ -2,12 +2,13 @@
 
 namespace App\Tests\functional;
 
-use App\Story\DefaultUserStory;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
+use App\Factory\UserFactory;
+use Faker\Factory;
 use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
 
-class AuthenticationTest extends WebTestCase
+class AuthenticationTest extends ApiTestCase
 {
     use ResetDatabase;
     use Factories;
@@ -16,7 +17,10 @@ class AuthenticationTest extends WebTestCase
     {
         parent::setUp();
 
-        DefaultUserStory::load();
+        UserFactory::createOne([
+            'email' => 'admin@example.com',
+            'password' => 'admin',
+        ]);
     }
 
     public function testLogin()
@@ -24,16 +28,53 @@ class AuthenticationTest extends WebTestCase
         $client = static::createClient();
 
         $client->request(
-            'GET',
-            '/login',
+            'POST',
+            '/auth',
             [
                 'json' => [
-                    'email' => 'test@test.com',
-                    'password' => 'password',
+                    'email' => 'admin@example.com',
+                    'password' => 'admin',
                 ],
             ]
         );
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function testLoginWithInvalidCredentials()
+    {
+        $faker = Factory::create();
+        $client = static::createClient();
+
+        $client->request(
+            'POST',
+            '/auth',
+            [
+                'json' => [
+                    'email' => $faker->email(),
+                    'password' => $faker->password(),
+                ],
+            ]
+        );
+
+        $this->assertEquals(401, $client->getResponse()->getStatusCode());
+    }
+
+    public function testLoginWithMissingField()
+    {
+        $client = static::createClient();
+
+        $client->request(
+            'POST',
+            '/auth',
+            [
+                'json' => [
+                    // Missing 'password' field
+                    'email' => 'admin@example.com',
+                ],
+            ]
+        );
+
+        $this->assertResponseStatusCodeSame(400);
     }
 }

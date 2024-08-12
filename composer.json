@@ -105,6 +105,7 @@
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.6",
         "friendsofphp/php-cs-fixer": "^3.58",
+        "justinrainbow/json-schema": "^6.0",
         "phpstan/phpstan": "^1.11",
         "phpstan/phpstan-phpunit": "^1.4",
         "phpunit/phpunit": "^9.5",

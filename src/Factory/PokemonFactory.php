@@ -15,10 +15,9 @@ final class PokemonFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'id' => self::faker()->randomNumber(),
-            'cry' => self::faker()->text(255),
-            'image' => self::faker()->text(255),
-            'name' => self::faker()->text(255),
+            'cry' => self::faker()->url(),
+            'image' => self::faker()->imageUrl(),
+            'name' => self::faker()->word(),
         ];
     }
 }
