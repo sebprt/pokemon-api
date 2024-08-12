@@ -4,7 +4,7 @@ resources:
       ApiPlatform\Metadata\GetCollection:
         uriTemplate: /pokemons
       ApiPlatform\Metadata\Post:
-        uriTemplate: /pokemons/{id}
+        uriTemplate: /pokemons
       ApiPlatform\Metadata\Get:
         uriTemplate: /pokemons/{id}
       ApiPlatform\Metadata\Put:
