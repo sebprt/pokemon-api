@@ -2,39 +2,39 @@
 
 namespace App\Repository;
 
-use App\Entity\Pokemon;
+use App\Entity\Option;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Pokemon>
+ * @extends ServiceEntityRepository<Option>
  */
-class PokemonRepository extends ServiceEntityRepository
+class OptionRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Pokemon::class);
+        parent::__construct($registry, Option::class);
     }
 
     //    /**
-    //     * @return Pokemon[] Returns an array of Pokemon objects
+    //     * @return Option[] Returns an array of Option objects
     //     */
     //    public function findByExampleField($value): array
     //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
+    //        return $this->createQueryBuilder('o')
+    //            ->andWhere('o.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
+    //            ->orderBy('o.id', 'ASC')
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Pokemon
+    //    public function findOneBySomeField($value): ?Option
     //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
+    //        return $this->createQueryBuilder('o')
+    //            ->andWhere('o.exampleField = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->getOneOrNullResult()

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
@@ -35,6 +37,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    /**
+     * @var Collection<int, UserReward>
+     */
+    #[ORM\OneToMany(targetEntity: UserReward::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $userRewards;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Level $level = null;
+
+    /**
+     * @var Collection<int, UserAvatar>
+     */
+    #[ORM\OneToMany(targetEntity: UserAvatar::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $userAvatars;
+
+    /**
+     * @var Collection<int, UserGame>
+     */
+    #[ORM\OneToMany(targetEntity: UserGame::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $userGames;
+
+    public function __construct()
+    {
+        $this->userRewards = new ArrayCollection();
+        $this->userAvatars = new ArrayCollection();
+        $this->userGames = new ArrayCollection();
+    }
 
     public function getId(): ?Uuid
     {
@@ -109,5 +143,119 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserReward>
+     */
+    public function getUserRewards(): Collection
+    {
+        return $this->userRewards;
+    }
+
+    public function addUserReward(UserReward $userReward): static
+    {
+        if (!$this->userRewards->contains($userReward)) {
+            $this->userRewards->add($userReward);
+            $userReward->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserReward(UserReward $userReward): static
+    {
+        if ($this->userRewards->removeElement($userReward)) {
+            // set the owning side to null (unless already changed)
+            if ($userReward->getUser() === $this) {
+                $userReward->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLevel(): ?Level
+    {
+        return $this->level;
+    }
+
+    public function setLevel(?Level $level): static
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserAvatar>
+     */
+    public function getUserAvatars(): Collection
+    {
+        return $this->userAvatars;
+    }
+
+    public function addUserAvatar(UserAvatar $userAvatar): static
+    {
+        if (!$this->userAvatars->contains($userAvatar)) {
+            $this->userAvatars->add($userAvatar);
+            $userAvatar->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserAvatar(UserAvatar $userAvatar): static
+    {
+        if ($this->userAvatars->removeElement($userAvatar)) {
+            // set the owning side to null (unless already changed)
+            if ($userAvatar->getUser() === $this) {
+                $userAvatar->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserGame>
+     */
+    public function getUserGames(): Collection
+    {
+        return $this->userGames;
+    }
+
+    public function addUserGame(UserGame $userGame): static
+    {
+        if (!$this->userGames->contains($userGame)) {
+            $this->userGames->add($userGame);
+            $userGame->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserGame(UserGame $userGame): static
+    {
+        if ($this->userGames->removeElement($userGame)) {
+            // set the owning side to null (unless already changed)
+            if ($userGame->getUser() === $this) {
+                $userGame->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }
