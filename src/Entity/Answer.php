@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\InheritanceType("JOINED")]
-#[ORM\DiscriminatorColumn(name: "answer_type", type: "string")]
-#[ORM\DiscriminatorMap(["multiple_choice" => MultipleChoiceAnswer::class, "text_input" => TextInputAnswer::class])]
+#[ORM\InheritanceType('JOINED')]
+#[ORM\DiscriminatorColumn(name: 'answer_type', type: 'string')]
+#[ORM\DiscriminatorMap(['multiple_choice' => MultipleChoiceAnswer::class, 'text_input' => TextInputAnswer::class])]
 abstract class Answer
 {
     #[ORM\Id]

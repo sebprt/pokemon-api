@@ -1,12 +1,12 @@
 resources:
   App\Entity\User:
-    operations:
-      ApiPlatform\Metadata\GetCollection: ~
-      ApiPlatform\Metadata\Post: ~
-      ApiPlatform\Metadata\Get: ~
-      ApiPlatform\Metadata\Put: ~
-      ApiPlatform\Metadata\Patch: ~
-      ApiPlatform\Metadata\Delete: ~
+    - operations:
+        ApiPlatform\Metadata\GetCollection: ~
+        ApiPlatform\Metadata\Post: ~
+        ApiPlatform\Metadata\Get: ~
+        ApiPlatform\Metadata\Put: ~
+        ApiPlatform\Metadata\Patch: ~
+        ApiPlatform\Metadata\Delete: ~
 
   App\Entity\Level:
     operations:
@@ -54,13 +54,20 @@ resources:
       ApiPlatform\Metadata\Delete: ~
 
   App\Entity\GameSession:
-    operations:
-      ApiPlatform\Metadata\GetCollection: ~
-      ApiPlatform\Metadata\Post: ~
-      ApiPlatform\Metadata\Get: ~
-      ApiPlatform\Metadata\Put: ~
-      ApiPlatform\Metadata\Patch: ~
-      ApiPlatform\Metadata\Delete: ~
+    - operations:
+        ApiPlatform\Metadata\GetCollection: ~
+        ApiPlatform\Metadata\Post: ~
+        ApiPlatform\Metadata\Get: ~
+        ApiPlatform\Metadata\Put: ~
+        ApiPlatform\Metadata\Patch: ~
+        ApiPlatform\Metadata\Delete: ~
+    - uriTemplate: /users/{id}/games
+      uriVariables:
+        id:
+          fromClass: App\Entity\Game
+          toProperty: user
+      operations:
+        ApiPlatform\Metadata\GetCollection: ~
 
   App\Entity\Answer:
     operations:
@@ -99,6 +106,22 @@ resources:
       ApiPlatform\Metadata\Delete: ~
 
   App\Entity\UserAvatar:
+    - operations:
+        ApiPlatform\Metadata\GetCollection: ~
+        ApiPlatform\Metadata\Post: ~
+        ApiPlatform\Metadata\Get: ~
+        ApiPlatform\Metadata\Put: ~
+        ApiPlatform\Metadata\Patch: ~
+        ApiPlatform\Metadata\Delete: ~
+    - uriTemplate: /users/{id}/avatars
+      uriVariables:
+        id:
+          fromClass: App\Entity\User
+          toProperty: user
+      operations:
+        ApiPlatform\Metadata\GetCollection: ~
+
+  App\Entity\MultipleChoiceQuestion:
     operations:
       ApiPlatform\Metadata\GetCollection: ~
       ApiPlatform\Metadata\Post: ~

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use App\Repository\OptionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,6 +20,7 @@ class Choice
     #[ORM\Column]
     private ?bool $isCorrect = null;
 
+    #[ApiProperty(writable: false)]
     #[ORM\ManyToOne(inversedBy: 'choices')]
     #[ORM\JoinColumn(nullable: false)]
     private ?MultipleChoiceQuestion $question = null;

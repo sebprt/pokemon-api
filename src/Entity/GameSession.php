@@ -24,7 +24,7 @@ class GameSession
     private ?Game $game = null;
 
     #[ORM\Column(options: [
-        'default' => 0
+        'default' => 0,
     ])]
     private ?int $score = null;
 
@@ -143,12 +143,12 @@ class GameSession
         return $this;
     }
 
-    public function isCompleted(): ?bool
+    public function getIsCompleted(): ?bool
     {
         return $this->isCompleted;
     }
 
-    public function setCompleted(bool $isCompleted): static
+    public function setIsCompleted(bool $isCompleted): static
     {
         $this->isCompleted = $isCompleted;
 

@@ -19,7 +19,9 @@ class Avatar
     #[ORM\Column]
     private ?int $unlockPoints = null;
 
-    #[ORM\Column]
+    #[ORM\Column(options: [
+        'default' => false,
+    ])]
     private ?bool $isUnlock = null;
 
     #[ORM\Column(length: 255)]
@@ -54,12 +56,12 @@ class Avatar
         return $this;
     }
 
-    public function isUnlock(): ?bool
+    public function getIsUnlock(): ?bool
     {
         return $this->isUnlock;
     }
 
-    public function setUnlock(bool $isUnlock): static
+    public function setIsUnlock(bool $isUnlock): static
     {
         $this->isUnlock = $isUnlock;
 
