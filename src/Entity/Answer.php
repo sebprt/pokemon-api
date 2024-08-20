@@ -4,7 +4,10 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\MappedSuperclass]
+#[ORM\Entity]
+#[ORM\InheritanceType("JOINED")]
+#[ORM\DiscriminatorColumn(name: "answer_type", type: "string")]
+#[ORM\DiscriminatorMap(["multiple_choice" => MultipleChoiceAnswer::class, "text_input" => TextInputAnswer::class])]
 abstract class Answer
 {
     #[ORM\Id]
@@ -25,6 +28,10 @@ abstract class Answer
     #[ORM\ManyToOne(inversedBy: 'answers')]
     #[ORM\JoinColumn(nullable: false)]
     protected ?GameSession $session = null;
+
+    #[ORM\ManyToOne(targetEntity: Question::class, inversedBy: 'answers')]
+    #[ORM\JoinColumn(nullable: false)]
+    protected ?Question $question = null;
 
     public function getId(): ?int
     {
@@ -75,6 +82,18 @@ abstract class Answer
     public function setSession(?GameSession $session): static
     {
         $this->session = $session;
+
+        return $this;
+    }
+
+    public function getQuestion(): ?Question
+    {
+        return $this->question;
+    }
+
+    public function setQuestion(?Question $question): static
+    {
+        $this->question = $question;
 
         return $this;
     }

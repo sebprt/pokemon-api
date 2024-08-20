@@ -1,2 +1,108 @@
 resources:
-  App\Entity\Game: ~
+  App\Entity\User:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\Level:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\UserLevelProgression:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\Game:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\Question:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\Choice:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\GameSession:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\Answer:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\Reward:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\UserReward:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\Avatar:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\UserAvatar:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~

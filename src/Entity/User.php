@@ -66,7 +66,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(options: [
         'default' => 0,
     ])]
-    private ?int $experience = null;
+    private ?int $experience = 0;
 
     public function __construct()
     {

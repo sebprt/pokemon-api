@@ -12,10 +12,6 @@ class MultipleChoiceAnswer extends Answer
     #[ORM\JoinColumn(nullable: false)]
     private ?Choice $choice = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?MultipleChoiceQuestion $question = null;
-
     public function getChoice(): ?Choice
     {
         return $this->choice;
@@ -24,18 +20,6 @@ class MultipleChoiceAnswer extends Answer
     public function setChoice(?Choice $choice): static
     {
         $this->choice = $choice;
-
-        return $this;
-    }
-
-    public function getQuestion(): ?MultipleChoiceQuestion
-    {
-        return $this->question;
-    }
-
-    public function setQuestion(?MultipleChoiceQuestion $question): static
-    {
-        $this->question = $question;
 
         return $this;
     }
