@@ -2,40 +2,33 @@
 
 namespace App\Entity;
 
-use App\Repository\AnswerRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AnswerRepository::class)]
-class Answer
+#[ORM\MappedSuperclass]
+abstract class Answer
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\ManyToOne(inversedBy: 'answers')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Question $question = null;
+    protected ?int $id = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    protected ?User $user = null;
+
+    #[ORM\Column]
+    protected ?\DateTimeImmutable $date = null;
+
+    #[ORM\Column]
+    protected ?bool $isCorrect = null;
+
+    #[ORM\ManyToOne(inversedBy: 'answers')]
+    #[ORM\JoinColumn(nullable: false)]
+    protected ?GameSession $session = null;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getQuestion(): ?Question
-    {
-        return $this->question;
-    }
-
-    public function setQuestion(?Question $question): static
-    {
-        $this->question = $question;
-
-        return $this;
     }
 
     public function getUser(): ?User
@@ -46,6 +39,42 @@ class Answer
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeImmutable
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeImmutable $date): static
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function isCorrect(): ?bool
+    {
+        return $this->isCorrect;
+    }
+
+    public function setCorrect(bool $isCorrect): static
+    {
+        $this->isCorrect = $isCorrect;
+
+        return $this;
+    }
+
+    public function getSession(): ?GameSession
+    {
+        return $this->session;
+    }
+
+    public function setSession(?GameSession $session): static
+    {
+        $this->session = $session;
 
         return $this;
     }

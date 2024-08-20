@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\Option;
+use App\Entity\Choice;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Option>
+ * @extends ServiceEntityRepository<Choice>
  */
 class OptionRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Option::class);
+        parent::__construct($registry, Choice::class);
     }
 
     //    /**
-    //     * @return Option[] Returns an array of Option objects
+    //     * @return Choice[] Returns an array of Choice objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class OptionRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Option
+    //    public function findOneBySomeField($value): ?Choice
     //    {
     //        return $this->createQueryBuilder('o')
     //            ->andWhere('o.exampleField = :val')

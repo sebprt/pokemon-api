@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\UserGame;
+use App\Entity\GameSession;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<UserGame>
+ * @extends ServiceEntityRepository<GameSession>
  */
 class UserGameRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, UserGame::class);
+        parent::__construct($registry, GameSession::class);
     }
 
     //    /**
-    //     * @return UserGame[] Returns an array of UserGame objects
+    //     * @return GameSession[] Returns an array of GameSession objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class UserGameRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?UserGame
+    //    public function findOneBySomeField($value): ?GameSession
     //    {
     //        return $this->createQueryBuilder('u')
     //            ->andWhere('u.exampleField = :val')

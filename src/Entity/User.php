@@ -58,10 +58,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $userAvatars;
 
     /**
-     * @var Collection<int, UserGame>
+     * @var Collection<int, GameSession>
      */
-    #[ORM\OneToMany(targetEntity: UserGame::class, mappedBy: 'user', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: GameSession::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $userGames;
+
+    #[ORM\Column(options: [
+        'default' => 0,
+    ])]
+    private ?int $experience = null;
 
     public function __construct()
     {
@@ -230,14 +235,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, UserGame>
+     * @return Collection<int, GameSession>
      */
     public function getUserGames(): Collection
     {
         return $this->userGames;
     }
 
-    public function addUserGame(UserGame $userGame): static
+    public function addUserGame(GameSession $userGame): static
     {
         if (!$this->userGames->contains($userGame)) {
             $this->userGames->add($userGame);
@@ -247,7 +252,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeUserGame(UserGame $userGame): static
+    public function removeUserGame(GameSession $userGame): static
     {
         if ($this->userGames->removeElement($userGame)) {
             // set the owning side to null (unless already changed)
@@ -255,6 +260,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $userGame->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getExperience(): ?int
+    {
+        return $this->experience;
+    }
+
+    public function setExperience(int $experience): static
+    {
+        $this->experience = $experience;
 
         return $this;
     }

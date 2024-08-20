@@ -9,14 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 class UserAvatar
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\ManyToOne(inversedBy: 'userAvatars')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\Id]
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Avatar $avatar = null;
@@ -26,11 +23,6 @@ class UserAvatar
 
     #[ORM\Column]
     private ?\DateTimeImmutable $unlockedAt = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getUser(): ?User
     {
