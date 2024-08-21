@@ -23,6 +23,11 @@ final class UserFactory extends PersistentProxyObjectFactory
             'email' => self::faker()->email(),
             'password' => self::faker()->password(),
             'roles' => [],
+            'createdAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
+            'experience' => self::faker()->randomNumber(),
+            'level' => LevelFactory::random(),
+            'userRewards' => UserRewardFactory::createRange(1, 100),
+            'userAvatars' => UserAvatarFactory::createRange(1, 50),
         ];
     }
 

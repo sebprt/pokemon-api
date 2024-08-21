@@ -2,22 +2,24 @@
 
 namespace App\Factory;
 
-use App\Entity\Pokemon;
+use App\Entity\Avatar;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
-final class PokemonFactory extends PersistentProxyObjectFactory
+final class AvatarFactory extends PersistentProxyObjectFactory
 {
+
     public static function class(): string
     {
-        return Pokemon::class;
+        return Avatar::class;
     }
 
     protected function defaults(): array|callable
     {
         return [
-            'cry' => self::faker()->url(),
-            'image' => self::faker()->imageUrl(),
+            'isUnlock' => self::faker()->boolean(),
             'name' => self::faker()->word(),
+            'unlockPoints' => self::faker()->randomNumber(),
+            'url' => self::faker()->imageUrl(),
         ];
     }
 }

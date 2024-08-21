@@ -2,9 +2,13 @@
 
 namespace App\DataFixtures;
 
-use App\Story\DefaultGameStory;
-use App\Story\DefaultPokemonStory;
-use App\Story\DefaultUserStory;
+use App\Entity\Avatar;
+use App\Factory\AvatarFactory;
+use App\Factory\GameFactory;
+use App\Factory\GameSessionFactory;
+use App\Factory\LevelFactory;
+use App\Factory\RewardFactory;
+use App\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -12,8 +16,11 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        DefaultGameStory::load();
-        DefaultPokemonStory::load();
-        DefaultUserStory::load();
+        AvatarFactory::createMany(50);
+        LevelFactory::createMany(20);
+        RewardFactory::createMany(200);
+        GameFactory::createMany(4);
+        UserFactory::createMany(5);
+        GameSessionFactory::createMany(20);
     }
 }

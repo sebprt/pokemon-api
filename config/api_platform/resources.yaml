@@ -1,16 +1,122 @@
 resources:
-  App\Entity\Pokemon:
+  App\Entity\User:
+    - operations:
+        ApiPlatform\Metadata\GetCollection: ~
+        ApiPlatform\Metadata\Post: ~
+        ApiPlatform\Metadata\Get: ~
+        ApiPlatform\Metadata\Put: ~
+        ApiPlatform\Metadata\Patch: ~
+        ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\Level:
     operations:
-      ApiPlatform\Metadata\GetCollection:
-        uriTemplate: /pokemons
-      ApiPlatform\Metadata\Post:
-        uriTemplate: /pokemons
-      ApiPlatform\Metadata\Get:
-        uriTemplate: /pokemons/{id}
-      ApiPlatform\Metadata\Put:
-        uriTemplate: /pokemons/{id}
-      ApiPlatform\Metadata\Patch:
-        uriTemplate: /pokemons/{id}
-      ApiPlatform\Metadata\Delete:
-        uriTemplate: /pokemons/{id}
-  App\Entity\Game: ~
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\Game:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\Question:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\Choice:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\GameSession:
+    - operations:
+        ApiPlatform\Metadata\GetCollection: ~
+        ApiPlatform\Metadata\Post: ~
+        ApiPlatform\Metadata\Get: ~
+        ApiPlatform\Metadata\Put: ~
+        ApiPlatform\Metadata\Patch: ~
+        ApiPlatform\Metadata\Delete: ~
+    - uriTemplate: /users/{id}/games
+      uriVariables:
+        id:
+          fromClass: App\Entity\Game
+          toProperty: user
+      operations:
+        ApiPlatform\Metadata\GetCollection: ~
+
+  App\Entity\Answer:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\Reward:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\UserReward:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\Avatar:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\UserAvatar:
+    - operations:
+        ApiPlatform\Metadata\GetCollection: ~
+        ApiPlatform\Metadata\Post: ~
+        ApiPlatform\Metadata\Get: ~
+        ApiPlatform\Metadata\Put: ~
+        ApiPlatform\Metadata\Patch: ~
+        ApiPlatform\Metadata\Delete: ~
+    - uriTemplate: /users/{id}/avatars
+      uriVariables:
+        id:
+          fromClass: App\Entity\User
+          toProperty: user
+      operations:
+        ApiPlatform\Metadata\GetCollection: ~
+
+  App\Entity\MultipleChoiceQuestion:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Put: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
