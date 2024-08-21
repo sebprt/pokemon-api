@@ -14,7 +14,7 @@ class UserReward
     private ?User $user = null;
 
     #[ORM\Id]
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'userRewards')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Reward $reward = null;
 

@@ -18,9 +18,9 @@ final class UserRewardFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'reward' => RewardFactory::random(),
+            'reward' => RewardFactory::new(),
             'unlockedAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
-            'user' => UserFactory::random(),
+            'user' => UserFactory::new(),
         ];
     }
 }

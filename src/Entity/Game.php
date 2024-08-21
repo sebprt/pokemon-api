@@ -30,20 +30,16 @@ class Game
     private ?string $description = null;
 
     /**
-     * @var Collection<int, Reward>
-     */
-    #[ORM\OneToMany(targetEntity: Reward::class, mappedBy: 'game', orphanRemoval: true)]
-    private Collection $rewards;
-
-    /**
      * @var Collection<int, Question>
      */
-    #[ORM\OneToMany(targetEntity: Question::class, mappedBy: 'game', orphanRemoval: true)]
+    #[ORM\JoinTable]
+    #[ORM\JoinColumn]
+    #[ORM\InverseJoinColumn(unique: true)]
+    #[ORM\ManyToMany(targetEntity:  Question::class, orphanRemoval: true)]
     private Collection $questions;
 
     public function __construct()
     {
-        $this->rewards = new ArrayCollection();
         $this->questions = new ArrayCollection();
     }
 
@@ -77,36 +73,6 @@ class Game
     }
 
     /**
-     * @return Collection<int, Reward>
-     */
-    public function getRewards(): Collection
-    {
-        return $this->rewards;
-    }
-
-    public function addReward(Reward $reward): static
-    {
-        if (!$this->rewards->contains($reward)) {
-            $this->rewards->add($reward);
-            $reward->setGame($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReward(Reward $reward): static
-    {
-        if ($this->rewards->removeElement($reward)) {
-            // set the owning side to null (unless already changed)
-            if ($reward->getGame() === $this) {
-                $reward->setGame(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Question>
      */
     public function getQuestions(): Collection
@@ -118,7 +84,6 @@ class Game
     {
         if (!$this->questions->contains($question)) {
             $this->questions->add($question);
-            $question->setGame($this);
         }
 
         return $this;
@@ -126,12 +91,7 @@ class Game
 
     public function removeQuestion(Question $question): static
     {
-        if ($this->questions->removeElement($question)) {
-            // set the owning side to null (unless already changed)
-            if ($question->getGame() === $this) {
-                $question->setGame(null);
-            }
-        }
+        $this->questions->removeElement($question);
 
         return $this;
     }

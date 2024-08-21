@@ -17,6 +17,10 @@ final class GameFactory extends PersistentProxyObjectFactory
         return [
             'description' => self::faker()->text(),
             'name' => self::faker()->word(),
+            'questions' => [
+                ...MultipleChoiceQuestionFactory::createRange(1, 10),
+                ...TextInputQuestionFactory::createRange(1, 10),
+            ],
         ];
     }
 }

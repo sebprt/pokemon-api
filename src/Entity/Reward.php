@@ -25,10 +25,6 @@ class Reward
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'rewards')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Game $game = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -54,18 +50,6 @@ class Reward
     public function setCondition(array $condition): static
     {
         $this->condition = $condition;
-
-        return $this;
-    }
-
-    public function getGame(): ?Game
-    {
-        return $this->game;
-    }
-
-    public function setGame(?Game $game): static
-    {
-        $this->game = $game;
 
         return $this;
     }

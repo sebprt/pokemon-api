@@ -17,10 +17,6 @@ abstract class Question
     #[ORM\Column]
     protected ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'questions')]
-    #[ORM\JoinColumn(nullable: false)]
-    protected ?Game $game = null;
-
     #[ORM\Column(length: 255)]
     protected ?string $label = null;
 
@@ -47,18 +43,6 @@ abstract class Question
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getGame(): ?Game
-    {
-        return $this->game;
-    }
-
-    public function setGame(?Game $game): static
-    {
-        $this->game = $game;
-
-        return $this;
     }
 
     public function getLabel(): ?string

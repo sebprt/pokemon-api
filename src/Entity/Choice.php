@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiProperty;
 use App\Repository\OptionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,11 +18,6 @@ class Choice
 
     #[ORM\Column]
     private ?bool $isCorrect = null;
-
-    #[ApiProperty(writable: false)]
-    #[ORM\ManyToOne(inversedBy: 'choices')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?MultipleChoiceQuestion $question = null;
 
     public function getId(): ?int
     {
@@ -42,26 +36,14 @@ class Choice
         return $this;
     }
 
-    public function isCorrect(): ?bool
+    public function getIsCorrect(): ?bool
     {
         return $this->isCorrect;
     }
 
-    public function setCorrect(bool $isCorrect): static
+    public function setIsCorrect(bool $isCorrect): static
     {
         $this->isCorrect = $isCorrect;
-
-        return $this;
-    }
-
-    public function getQuestion(): ?MultipleChoiceQuestion
-    {
-        return $this->question;
-    }
-
-    public function setQuestion(?MultipleChoiceQuestion $question): static
-    {
-        $this->question = $question;
 
         return $this;
     }

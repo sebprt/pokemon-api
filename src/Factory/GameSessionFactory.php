@@ -18,15 +18,11 @@ final class GameSessionFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'game' => GameFactory::random(),
+            'game' => GameFactory::new(),
             'isCompleted' => self::faker()->boolean(),
             'score' => self::faker()->randomNumber(),
             'startedAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
-            'user' => UserFactory::random(),
-            'questions' => [
-                ...MultipleChoiceQuestionFactory::createRange(1, 30),
-                ...TextInputQuestionFactory::createRange(1, 30),
-            ],
+            'user' => UserFactory::new(),
         ];
     }
 }

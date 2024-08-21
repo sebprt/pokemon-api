@@ -13,7 +13,10 @@ class MultipleChoiceQuestion extends Question
     /**
      * @var Collection<int, Choice>
      */
-    #[ORM\OneToMany(targetEntity: Choice::class, mappedBy: 'question', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[ORM\JoinTable]
+    #[ORM\JoinColumn]
+    #[ORM\InverseJoinColumn(unique: true)]
+    #[ORM\ManyToMany(targetEntity: Choice::class)]
     private Collection $choices;
 
     public function __construct()
@@ -34,7 +37,6 @@ class MultipleChoiceQuestion extends Question
     {
         if (!$this->choices->contains($choice)) {
             $this->choices->add($choice);
-            $choice->setQuestion($this);
         }
 
         return $this;
@@ -42,12 +44,7 @@ class MultipleChoiceQuestion extends Question
 
     public function removeChoice(Choice $choice): static
     {
-        if ($this->choices->removeElement($choice)) {
-            // set the owning side to null (unless already changed)
-            if ($choice->getQuestion() === $this) {
-                $choice->setQuestion(null);
-            }
-        }
+        $this->choices->removeElement($choice);
 
         return $this;
     }

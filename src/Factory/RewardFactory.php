@@ -17,7 +17,6 @@ final class RewardFactory extends PersistentProxyObjectFactory
         return [
             'condition' => [],
             'createdAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
-            'game' => GameFactory::new(),
             'name' => self::faker()->text(255),
             'updatedAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
         ];
