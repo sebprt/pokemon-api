@@ -5,9 +5,6 @@ namespace App\Factory;
 use App\Entity\TextInputQuestion;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
-/**
- * @extends PersistentProxyObjectFactory<TextInputQuestion>
- */
 final class TextInputQuestionFactory extends PersistentProxyObjectFactory
 {
     public static function class(): string

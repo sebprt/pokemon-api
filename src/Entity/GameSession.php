@@ -37,7 +37,10 @@ class GameSession
     /**
      * @var Collection<int, Answer>
      */
-    #[ORM\OneToMany(targetEntity: Answer::class, mappedBy: 'session', orphanRemoval: true)]
+    #[ORM\JoinTable]
+    #[ORM\JoinColumn]
+    #[ORM\InverseJoinColumn(unique: true)]
+    #[ORM\ManyToMany(targetEntity: Answer::class, orphanRemoval: true)]
     private Collection $answers;
 
     #[ORM\Column]
@@ -125,7 +128,6 @@ class GameSession
     {
         if (!$this->answers->contains($answer)) {
             $this->answers->add($answer);
-            $answer->setSession($this);
         }
 
         return $this;
@@ -133,12 +135,7 @@ class GameSession
 
     public function removeAnswer(Answer $answer): static
     {
-        if ($this->answers->removeElement($answer)) {
-            // set the owning side to null (unless already changed)
-            if ($answer->getSession() === $this) {
-                $answer->setSession(null);
-            }
-        }
+        $this->answers->removeElement($answer);
 
         return $this;
     }

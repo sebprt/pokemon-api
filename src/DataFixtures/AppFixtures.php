@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Avatar;
 use App\Factory\AvatarFactory;
 use App\Factory\GameFactory;
+use App\Factory\GameSessionFactory;
 use App\Factory\LevelFactory;
 use App\Factory\RewardFactory;
 use App\Factory\UserFactory;
@@ -20,5 +21,6 @@ class AppFixtures extends Fixture
         RewardFactory::createMany(200);
         GameFactory::createMany(4);
         UserFactory::createMany(5);
+        GameSessionFactory::createMany(20);
     }
 }

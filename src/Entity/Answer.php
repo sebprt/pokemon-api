@@ -25,10 +25,6 @@ abstract class Answer
     #[ORM\Column]
     protected ?bool $isCorrect = null;
 
-    #[ORM\ManyToOne(inversedBy: 'answers')]
-    #[ORM\JoinColumn(nullable: false)]
-    protected ?GameSession $session = null;
-
     #[ORM\ManyToOne(targetEntity: Question::class, inversedBy: 'answers')]
     #[ORM\JoinColumn(nullable: false)]
     protected ?Question $question = null;
@@ -62,26 +58,14 @@ abstract class Answer
         return $this;
     }
 
-    public function isCorrect(): ?bool
+    public function getIsCorrect(): ?bool
     {
         return $this->isCorrect;
     }
 
-    public function setCorrect(bool $isCorrect): static
+    public function setIsCorrect(bool $isCorrect): static
     {
         $this->isCorrect = $isCorrect;
-
-        return $this;
-    }
-
-    public function getSession(): ?GameSession
-    {
-        return $this->session;
-    }
-
-    public function setSession(?GameSession $session): static
-    {
-        $this->session = $session;
 
         return $this;
     }

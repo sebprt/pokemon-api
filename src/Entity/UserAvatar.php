@@ -9,11 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
 class UserAvatar
 {
     #[ORM\Id]
-    #[ORM\ManyToOne(inversedBy: 'userAvatars')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    #[ORM\Id]
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Avatar $avatar = null;
@@ -24,16 +23,9 @@ class UserAvatar
     #[ORM\Column]
     private ?\DateTimeImmutable $unlockedAt = null;
 
-    public function getUser(): ?User
+    public function getId(): ?int
     {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
+        return $this->id;
     }
 
     public function getAvatar(): ?Avatar
@@ -48,12 +40,12 @@ class UserAvatar
         return $this;
     }
 
-    public function isCurrent(): ?bool
+    public function getIsCurrent(): ?bool
     {
         return $this->isCurrent;
     }
 
-    public function setCurrent(bool $isCurrent): static
+    public function setIsCurrent(bool $isCurrent): static
     {
         $this->isCurrent = $isCurrent;
 

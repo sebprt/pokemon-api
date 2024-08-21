@@ -9,28 +9,20 @@ use Doctrine\ORM\Mapping as ORM;
 class UserReward
 {
     #[ORM\Id]
-    #[ORM\ManyToOne(inversedBy: 'userRewards')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    #[ORM\Id]
-    #[ORM\ManyToOne(inversedBy: 'userRewards')]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Reward $reward = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $unlockedAt = null;
 
-    public function getUser(): ?User
+    public function getId(): ?int
     {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
+        return $this->id;
     }
 
     public function getReward(): ?Reward

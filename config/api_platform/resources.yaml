@@ -17,15 +17,6 @@ resources:
       ApiPlatform\Metadata\Patch: ~
       ApiPlatform\Metadata\Delete: ~
 
-  App\Entity\UserLevelProgression:
-    operations:
-      ApiPlatform\Metadata\GetCollection: ~
-      ApiPlatform\Metadata\Post: ~
-      ApiPlatform\Metadata\Get: ~
-      ApiPlatform\Metadata\Put: ~
-      ApiPlatform\Metadata\Patch: ~
-      ApiPlatform\Metadata\Delete: ~
-
   App\Entity\Game:
     operations:
       ApiPlatform\Metadata\GetCollection: ~

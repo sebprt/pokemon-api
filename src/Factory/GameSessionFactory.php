@@ -5,9 +5,6 @@ namespace App\Factory;
 use App\Entity\GameSession;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
-/**
- * @extends PersistentProxyObjectFactory<GameSession>
- */
 final class GameSessionFactory extends PersistentProxyObjectFactory
 {
     public static function class(): string
@@ -18,11 +15,16 @@ final class GameSessionFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'game' => GameFactory::new(),
+            'game' => GameFactory::random(),
             'isCompleted' => self::faker()->boolean(),
             'score' => self::faker()->randomNumber(),
             'startedAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
-            'user' => UserFactory::new(),
+            'endedAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
+            'user' => UserFactory::random(),
+            'answers' => [
+                ...MultipleChoiceAnswerFactory::createRange(1, 20),
+                ...TextInputAnswerFactory::createRange(1, 20),
+            ]
         ];
     }
 }

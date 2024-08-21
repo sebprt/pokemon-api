@@ -3,7 +3,6 @@
 namespace App\Factory;
 
 use App\Entity\User;
-use App\Story\GameSessionStory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
@@ -27,8 +26,8 @@ final class UserFactory extends PersistentProxyObjectFactory
             'createdAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'experience' => self::faker()->randomNumber(),
             'level' => LevelFactory::random(),
-            'userRewards' => UserRewardFactory::createRange(1, 10),
-            'userAvatars' => UserAvatarFactory::createRange(1, 10),
+            'userRewards' => UserRewardFactory::createRange(1, 100),
+            'userAvatars' => UserAvatarFactory::createRange(1, 50),
         ];
     }
 
