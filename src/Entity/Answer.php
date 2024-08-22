@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
 #[ORM\InheritanceType('JOINED')]
@@ -11,9 +14,10 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class Answer
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    protected ?int $id = null;
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
+    protected ?Uuid $id = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -25,11 +29,11 @@ abstract class Answer
     #[ORM\Column]
     protected ?bool $isCorrect = null;
 
-    #[ORM\ManyToOne(targetEntity: Question::class, inversedBy: 'answers')]
+    #[ORM\ManyToOne(targetEntity: Question::class)]
     #[ORM\JoinColumn(nullable: false)]
     protected ?Question $question = null;
 
-    public function getId(): ?int
+    public function getId(): ?Uuid
     {
         return $this->id;
     }

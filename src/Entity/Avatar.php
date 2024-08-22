@@ -4,30 +4,39 @@ namespace App\Entity;
 
 use App\Repository\AvatarRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AvatarRepository::class)]
 class Avatar
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
+    private ?Uuid $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull, Assert\NotBlank]
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Assert\NotNull, Assert\Positive]
     private ?int $unlockPoints = null;
 
     #[ORM\Column(options: [
         'default' => false,
     ])]
+    #[Assert\Type('boolean')]
     private ?bool $isUnlock = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull, Assert\NotBlank, Assert\Url]
     private ?string $url = null;
 
-    public function getId(): ?int
+    public function getId(): ?Uuid
     {
         return $this->id;
     }

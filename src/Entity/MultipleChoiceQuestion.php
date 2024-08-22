@@ -21,7 +21,6 @@ class MultipleChoiceQuestion extends Question
 
     public function __construct()
     {
-        parent::__construct();
         $this->choices = new ArrayCollection();
     }
 

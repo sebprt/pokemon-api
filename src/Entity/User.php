@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -24,6 +25,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?Uuid $id = null;
 
     #[ORM\Column(length: 180)]
+    #[Assert\NotNull, Assert\NotBlank, Assert\Email]
     private ?string $email = null;
 
     /**
@@ -36,9 +38,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotNull, Assert\NotBlank, Assert\PasswordStrength, Assert\NotCompromisedPassword]
     private ?string $password = null;
 
     #[ORM\Column]
+    #[Assert\NotNull]
     private ?\DateTimeImmutable $createdAt = null;
 
     /**
@@ -52,6 +56,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull, Assert\Type(Level::class)]
     private ?Level $level = null;
 
     /**
@@ -72,6 +77,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(options: [
         'default' => 0,
     ])]
+    #[Assert\NotNull, Assert\PositiveOrZero]
     private ?int $experience = 0;
 
     public function __construct()
