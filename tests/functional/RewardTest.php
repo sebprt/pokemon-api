@@ -4,7 +4,6 @@ namespace App\Tests\functional;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use App\Factory\RewardFactory;
-use App\Story\DefaultRewardstory;
 use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
 
@@ -71,8 +70,7 @@ class RewardTest extends ApiTestCase
                     'condition' => [
                         'condition'
                     ],
-                    'createdAt' => '2024-08-22',
-                    'updatedAt' => '2024-08-22',
+                    'url' => 'https://example.com'
                 ],
             ],
         );
@@ -93,8 +91,6 @@ class RewardTest extends ApiTestCase
                     'condition' => [
                         'Obtain 1000 points.'
                     ],
-                    'createdAt' => '2024-08-22',
-                    'updatedAt' => '2024-08-22',
                 ],
             ],
         );
@@ -113,7 +109,7 @@ class RewardTest extends ApiTestCase
             [
                 'headers' => ['Content-Type' => 'application/merge-patch+json'],
                 'json' => [
-                    'updatedAt' => '2024-08-22',
+                    'name' => 'Uno',
                 ],
             ],
         );

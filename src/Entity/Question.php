@@ -2,17 +2,27 @@
 
 namespace App\Entity;
 
+use App\Entity\Trait\TimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Serializer;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 #[ORM\InheritanceType("JOINED")]
 #[ORM\DiscriminatorColumn(name: "type", type: "string")]
 #[ORM\DiscriminatorMap(["multiple_choice" => MultipleChoiceQuestion::class, "text_input" => TextInputQuestion::class])]
+#[ORM\HasLifecycleCallbacks]
+#[Serializer\Annotation\DiscriminatorMap(typeProperty: 'type', mapping: [
+    'multiple_choice' => MultipleChoiceQuestion::class,
+    'text_input' => TextInputQuestion::class,
+])]
 abstract class Question
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
@@ -20,16 +30,12 @@ abstract class Question
     protected ?Uuid $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull, Assert\NotBlank]
     protected ?string $label = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotNull, Assert\NotBlank, Assert\Url]
     protected ?string $media = null;
-
-    #[ORM\Column]
-    protected ?\DateTimeImmutable $createdAt = null;
-
-    #[ORM\Column]
-    protected ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?Uuid
     {
@@ -44,30 +50,6 @@ abstract class Question
     public function setLabel(string $label): static
     {
         $this->label = $label;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
 
         return $this;
     }

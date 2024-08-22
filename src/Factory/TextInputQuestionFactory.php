@@ -16,9 +16,7 @@ final class TextInputQuestionFactory extends PersistentProxyObjectFactory
     {
         return [
             'correctAnswer' => self::faker()->text(255),
-            'createdAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'label' => self::faker()->text(255),
-            'updatedAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
         ];
     }
 }

@@ -1,0 +1,41 @@
+App\Entity\Reward:
+  attributes:
+    name:
+      groups: ['reward:write']
+    condition:
+      groups: ['reward:write']
+    url:
+      groups: ['reward:write']
+
+App\Entity\Game:
+  attributes:
+    name:
+      groups: ['game:write', 'game:read']
+    description:
+      groups: ['game:write', 'game:read']
+    questions:
+      groups: ['game:write']
+
+App\Entity\Question:
+  attributes:
+    label:
+      groups: ['game:write']
+    media:
+      groups: ['game:write']
+
+App\Entity\MultipleChoiceQuestion:
+  attributes:
+    choices:
+      groups: ['game:write']
+
+App\Entity\TextInputQuestion:
+  attributes:
+    correctAnswer:
+      groups: ['game:write']
+
+App\Entity\Choice:
+  attributes:
+    label:
+      groups: ['game:write']
+    isCorrect:
+      groups: ['game:write']

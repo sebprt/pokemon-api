@@ -25,66 +25,27 @@ resources:
       ApiPlatform\Metadata\Put: ~
       ApiPlatform\Metadata\Patch: ~
       ApiPlatform\Metadata\Delete: ~
+    normalizationContext:
+      groups: [ 'game:read' ]
+    denormalizationContext:
+      groups: [ 'game:write' ]
 
   App\Entity\Reward:
     operations:
       ApiPlatform\Metadata\GetCollection: ~
-      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Post:
       ApiPlatform\Metadata\Get: ~
       ApiPlatform\Metadata\Put: ~
       ApiPlatform\Metadata\Patch: ~
       ApiPlatform\Metadata\Delete: ~
+    denormalizationContext:
+      groups: [ 'reward:write' ]
 
   App\Entity\Avatar:
     operations:
       ApiPlatform\Metadata\GetCollection: ~
       ApiPlatform\Metadata\Post: ~
       ApiPlatform\Metadata\Get: ~
-      ApiPlatform\Metadata\Put: ~
-      ApiPlatform\Metadata\Patch: ~
-      ApiPlatform\Metadata\Delete: ~
-
-  App\Entity\Question:
-    uriTemplate: /games/{id}/questions
-    uriVariables:
-      id:
-        fromClass: App\Entity\Game
-        fromProperty: questions
-    operations:
-      ApiPlatform\Metadata\GetCollection: ~
-      ApiPlatform\Metadata\Post: ~
-      ApiPlatform\Metadata\Put: ~
-      ApiPlatform\Metadata\Patch: ~
-      ApiPlatform\Metadata\Delete: ~
-
-  App\Entity\Choice:
-    uriTemplate: /games/{id}/questions/{questionId}/choices
-    uriVariables:
-      id:
-        fromClass: App\Entity\Game
-        fromProperty: questions
-      questionId:
-        fromClass: App\Entity\MultipleChoiceQuestion
-        fromProperty: choices
-    operations:
-      ApiPlatform\Metadata\GetCollection: ~
-      ApiPlatform\Metadata\Post: ~
-      ApiPlatform\Metadata\Put: ~
-      ApiPlatform\Metadata\Patch: ~
-      ApiPlatform\Metadata\Delete: ~
-
-  App\Entity\TextInputQuestion:
-    uriTemplate: /games/{id}/questions/{questionId}/answer
-    uriVariables:
-      id:
-        fromClass: App\Entity\Game
-        fromProperty: questions
-      questionId:
-        fromClass: App\Entity\TextInputQuestion
-        fromProperty: correctAnswer
-    operations:
-      ApiPlatform\Metadata\GetCollection: ~
-      ApiPlatform\Metadata\Post: ~
       ApiPlatform\Metadata\Put: ~
       ApiPlatform\Metadata\Patch: ~
       ApiPlatform\Metadata\Delete: ~
