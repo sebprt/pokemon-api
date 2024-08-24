@@ -18,17 +18,35 @@ resources:
       ApiPlatform\Metadata\Delete: ~
 
   App\Entity\Game:
-    operations:
-      ApiPlatform\Metadata\GetCollection: ~
-      ApiPlatform\Metadata\Post: ~
-      ApiPlatform\Metadata\Get: ~
-      ApiPlatform\Metadata\Put: ~
-      ApiPlatform\Metadata\Patch: ~
-      ApiPlatform\Metadata\Delete: ~
-    normalizationContext:
-      groups: [ 'game:read' ]
-    denormalizationContext:
-      groups: [ 'game:write' ]
+    - operations:
+        ApiPlatform\Metadata\GetCollection: ~
+        ApiPlatform\Metadata\Post:
+          denormalizationContext:
+            groups: [ 'game:create' ]
+        ApiPlatform\Metadata\Get: ~
+        ApiPlatform\Metadata\Put:
+          denormalizationContext:
+            groups: [ 'game:write' ]
+        ApiPlatform\Metadata\Patch:
+          denormalizationContext:
+            groups: [ 'game:write' ]
+        ApiPlatform\Metadata\Delete: ~
+      normalizationContext:
+        groups: [ 'game:read' ]
+    - uriTemplate: '/games/{id}/questions'
+      operations:
+        ApiPlatform\Metadata\Post:
+          controller: App\Controller\AddGameQuestionController
+
+  App\Entity\Question:
+    - uriTemplate: '/games/{id}/questions'
+      itemUriTemplate: '/games/{id}/questions/{questionId}'
+      uriVariables:
+        id:
+          fromClass: App\Entity\Game
+          fromProperty: questions
+      operations:
+        ApiPlatform\Metadata\GetCollection: ~
 
   App\Entity\Reward:
     operations:

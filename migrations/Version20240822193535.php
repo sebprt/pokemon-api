@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240822132119 extends AbstractMigration
+final class Version20240822193535 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -51,31 +51,27 @@ final class Version20240822132119 extends AbstractMigration
         $this->addSql('CREATE UNIQUE INDEX UNIQ_6F7C1C30AA334807 ON game_session_answer (answer_id)');
         $this->addSql('COMMENT ON COLUMN game_session_answer.game_session_id IS \'(DC2Type:uuid)\'');
         $this->addSql('COMMENT ON COLUMN game_session_answer.answer_id IS \'(DC2Type:uuid)\'');
-        $this->addSql('CREATE TABLE level (id UUID NOT NULL, number INT NOT NULL, required_points BIGINT NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE level (id UUID NOT NULL, number INT NOT NULL, required_points INT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('COMMENT ON COLUMN level.id IS \'(DC2Type:uuid)\'');
         $this->addSql('CREATE TABLE multiple_choice_answer (id UUID NOT NULL, choice_id UUID NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_5AF0920998666D1 ON multiple_choice_answer (choice_id)');
         $this->addSql('COMMENT ON COLUMN multiple_choice_answer.id IS \'(DC2Type:uuid)\'');
         $this->addSql('COMMENT ON COLUMN multiple_choice_answer.choice_id IS \'(DC2Type:uuid)\'');
-        $this->addSql('CREATE TABLE multiple_choice_question (id UUID NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('COMMENT ON COLUMN multiple_choice_question.id IS \'(DC2Type:uuid)\'');
+        $this->addSql('CREATE TABLE question (id UUID NOT NULL, label VARCHAR(255) NOT NULL, media VARCHAR(255) DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, type VARCHAR(255) NOT NULL, correct_answer VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('COMMENT ON COLUMN question.id IS \'(DC2Type:uuid)\'');
+        $this->addSql('COMMENT ON COLUMN question.created_at IS \'(DC2Type:datetime_immutable)\'');
+        $this->addSql('COMMENT ON COLUMN question.updated_at IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('CREATE TABLE multiple_choice_question_choice (multiple_choice_question_id UUID NOT NULL, choice_id UUID NOT NULL, PRIMARY KEY(multiple_choice_question_id, choice_id))');
         $this->addSql('CREATE INDEX IDX_B3EC9A23EB3EBF2 ON multiple_choice_question_choice (multiple_choice_question_id)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_B3EC9A23998666D1 ON multiple_choice_question_choice (choice_id)');
         $this->addSql('COMMENT ON COLUMN multiple_choice_question_choice.multiple_choice_question_id IS \'(DC2Type:uuid)\'');
         $this->addSql('COMMENT ON COLUMN multiple_choice_question_choice.choice_id IS \'(DC2Type:uuid)\'');
-        $this->addSql('CREATE TABLE question (id UUID NOT NULL, label VARCHAR(255) NOT NULL, media VARCHAR(255) DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, type VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('COMMENT ON COLUMN question.id IS \'(DC2Type:uuid)\'');
-        $this->addSql('COMMENT ON COLUMN question.created_at IS \'(DC2Type:datetime_immutable)\'');
-        $this->addSql('COMMENT ON COLUMN question.updated_at IS \'(DC2Type:datetime_immutable)\'');
-        $this->addSql('CREATE TABLE reward (id UUID NOT NULL, name VARCHAR(255) NOT NULL, condition JSON NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE reward (id UUID NOT NULL, name VARCHAR(255) NOT NULL, condition JSON NOT NULL, url VARCHAR(255) NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('COMMENT ON COLUMN reward.id IS \'(DC2Type:uuid)\'');
         $this->addSql('COMMENT ON COLUMN reward.created_at IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('COMMENT ON COLUMN reward.updated_at IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('CREATE TABLE text_input_answer (id UUID NOT NULL, content VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('COMMENT ON COLUMN text_input_answer.id IS \'(DC2Type:uuid)\'');
-        $this->addSql('CREATE TABLE text_input_question (id UUID NOT NULL, correct_answer VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('COMMENT ON COLUMN text_input_question.id IS \'(DC2Type:uuid)\'');
         $this->addSql('CREATE TABLE "user" (id UUID NOT NULL, level_id UUID NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, experience INT DEFAULT 0 NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_8D93D6495FB14BA7 ON "user" (level_id)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL ON "user" (email)');
@@ -127,11 +123,9 @@ final class Version20240822132119 extends AbstractMigration
         $this->addSql('ALTER TABLE game_session_answer ADD CONSTRAINT FK_6F7C1C30AA334807 FOREIGN KEY (answer_id) REFERENCES answer (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE multiple_choice_answer ADD CONSTRAINT FK_5AF0920998666D1 FOREIGN KEY (choice_id) REFERENCES choice (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE multiple_choice_answer ADD CONSTRAINT FK_5AF0920BF396750 FOREIGN KEY (id) REFERENCES answer (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('ALTER TABLE multiple_choice_question ADD CONSTRAINT FK_24557253BF396750 FOREIGN KEY (id) REFERENCES question (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('ALTER TABLE multiple_choice_question_choice ADD CONSTRAINT FK_B3EC9A23EB3EBF2 FOREIGN KEY (multiple_choice_question_id) REFERENCES multiple_choice_question (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE multiple_choice_question_choice ADD CONSTRAINT FK_B3EC9A23EB3EBF2 FOREIGN KEY (multiple_choice_question_id) REFERENCES question (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE multiple_choice_question_choice ADD CONSTRAINT FK_B3EC9A23998666D1 FOREIGN KEY (choice_id) REFERENCES choice (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE text_input_answer ADD CONSTRAINT FK_E41B85B6BF396750 FOREIGN KEY (id) REFERENCES answer (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('ALTER TABLE text_input_question ADD CONSTRAINT FK_E7407170BF396750 FOREIGN KEY (id) REFERENCES question (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE "user" ADD CONSTRAINT FK_8D93D6495FB14BA7 FOREIGN KEY (level_id) REFERENCES level (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE user_user_reward ADD CONSTRAINT FK_8298A0FBA76ED395 FOREIGN KEY (user_id) REFERENCES "user" (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE user_user_reward ADD CONSTRAINT FK_8298A0FBE4862145 FOREIGN KEY (user_reward_id) REFERENCES user_reward (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
@@ -155,11 +149,9 @@ final class Version20240822132119 extends AbstractMigration
         $this->addSql('ALTER TABLE game_session_answer DROP CONSTRAINT FK_6F7C1C30AA334807');
         $this->addSql('ALTER TABLE multiple_choice_answer DROP CONSTRAINT FK_5AF0920998666D1');
         $this->addSql('ALTER TABLE multiple_choice_answer DROP CONSTRAINT FK_5AF0920BF396750');
-        $this->addSql('ALTER TABLE multiple_choice_question DROP CONSTRAINT FK_24557253BF396750');
         $this->addSql('ALTER TABLE multiple_choice_question_choice DROP CONSTRAINT FK_B3EC9A23EB3EBF2');
         $this->addSql('ALTER TABLE multiple_choice_question_choice DROP CONSTRAINT FK_B3EC9A23998666D1');
         $this->addSql('ALTER TABLE text_input_answer DROP CONSTRAINT FK_E41B85B6BF396750');
-        $this->addSql('ALTER TABLE text_input_question DROP CONSTRAINT FK_E7407170BF396750');
         $this->addSql('ALTER TABLE "user" DROP CONSTRAINT FK_8D93D6495FB14BA7');
         $this->addSql('ALTER TABLE user_user_reward DROP CONSTRAINT FK_8298A0FBA76ED395');
         $this->addSql('ALTER TABLE user_user_reward DROP CONSTRAINT FK_8298A0FBE4862145');
@@ -176,12 +168,10 @@ final class Version20240822132119 extends AbstractMigration
         $this->addSql('DROP TABLE game_session_answer');
         $this->addSql('DROP TABLE level');
         $this->addSql('DROP TABLE multiple_choice_answer');
-        $this->addSql('DROP TABLE multiple_choice_question');
-        $this->addSql('DROP TABLE multiple_choice_question_choice');
         $this->addSql('DROP TABLE question');
+        $this->addSql('DROP TABLE multiple_choice_question_choice');
         $this->addSql('DROP TABLE reward');
         $this->addSql('DROP TABLE text_input_answer');
-        $this->addSql('DROP TABLE text_input_question');
         $this->addSql('DROP TABLE "user"');
         $this->addSql('DROP TABLE user_user_reward');
         $this->addSql('DROP TABLE user_user_avatar');
