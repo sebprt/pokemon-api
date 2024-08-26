@@ -3,12 +3,11 @@
 namespace App\Tests\functional;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
-use App\Factory\PokemonFactory;
-use App\Story\DefaultPokemonStory;
+use App\Factory\AvatarFactory;
 use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
 
-class PokemonTest extends ApiTestCase
+class AvatarTest extends ApiTestCase
 {
     use ResetDatabase;
     use Factories;
@@ -17,65 +16,60 @@ class PokemonTest extends ApiTestCase
     {
         parent::setUp();
 
-        DefaultPokemonStory::load();
+        AvatarFactory::createMany(50);
     }
 
-    public function testGetPokemons(): void
+    public function testGetAvatars(): void
     {
         $client = static::createClient();
         $client->request(
             'GET',
-            '/pokemons',
-            [
-                'headers' => ['Content-Type' => 'application/json'],
-            ],
+            '/avatars',
+            ['headers' => ['Content-Type' => 'application/json']]
         );
 
         $this->assertResponseIsSuccessful();
     }
 
-    public function testGetPokemon(): void
+    public function testGetAvatar(): void
     {
-        $factory = PokemonFactory::random();
+        $factory = AvatarFactory::random();
 
         $client = static::createClient();
         $client->request(
             'GET',
-            '/pokemons/'.$factory->_get('id')->toString(),
-            [
-                'headers' => ['Content-Type' => 'application/json'],
-            ],
+            '/avatars/'.$factory->_get('id'),
+            ['headers' => ['Content-Type' => 'application/json']]
         );
 
         $this->assertResponseIsSuccessful();
     }
 
-    public function testGetNonExistentPokemon(): void
+    public function testGetNonExistentAvatar(): void
     {
         $client = static::createClient();
         $client->request(
             'GET',
-            '/pokemons/7ce84785-3ed8-4269-a568-ff5e79edaa70',
-            [
-                'headers' => ['Content-Type' => 'application/json'],
-            ],
+            '/avatars/07d8a11b-308e-4543-8bf3-ae28bd8578fe',
+            ['headers' => ['Content-Type' => 'application/json']]
         );
 
         $this->assertResponseStatusCodeSame(404);
     }
 
-    public function testCreatePokemon(): void
+    public function testCreateAvatar(): void
     {
         $client = static::createClient();
         $client->request(
             'POST',
-            '/pokemons',
+            '/avatars',
             [
                 'headers' => ['Content-Type' => 'application/json'],
                 'json' => [
-                    'name' => 'Charizard',
-                    'image' => 'https://example.com/images/charizard.png',
-                    'cry' => 'https://example.com/sounds/charizard-cry.mp3',
+                    'name' => 'Strategic Warfare',
+                    'url' => 'https://example.com',
+                    'unlockPoints' => 1000,
+                    'isUnlock' => true,
                 ],
             ],
         );
@@ -83,18 +77,20 @@ class PokemonTest extends ApiTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testCreatePokemonWithInvalidData(): void
+    public function testCreateAvatarWithInvalidData(): void
     {
         $client = static::createClient();
         $client->request(
             'POST',
-            '/pokemons',
+            '/avatars',
             [
                 'headers' => ['Content-Type' => 'application/json'],
                 'json' => [
-                    // Missing 'name' field, and invalid 'image' URL
-                    'image' => 'not-a-valid-url',
-                    'cry' => 'https://example.com/sounds/charizard-cry.mp3',
+                    // 'unlockPoints' should be positive
+                    'name' => 'Strategic Warfare',
+                    'url' => 'https://example.com',
+                    'unlockPoints' => 0,
+                    'isUnlock' => false,
                 ],
             ],
         );
@@ -102,18 +98,39 @@ class PokemonTest extends ApiTestCase
         $this->assertResponseStatusCodeSame(422);
     }
 
-    public function testUpdatePokemon(): void
+    public function testCreateAvatarWithBadRequest(): void
     {
-        $factory = PokemonFactory::random();
+        $client = static::createClient();
+        $client->request(
+            'POST',
+            '/avatars',
+            [
+                'headers' => ['Content-Type' => 'application/json'],
+                'json' => [
+                    // 'isUnlock' field is not a boolean
+                    'name' => 'Strategic Warfare',
+                    'url' => 'https://example.com',
+                    'unlockPoints' => 0,
+                    'isUnlock' => 1,
+                ],
+            ],
+        );
+
+        $this->assertResponseStatusCodeSame(400);
+    }
+
+    public function testUpdateAvatar(): void
+    {
+        $factory = AvatarFactory::random();
 
         $client = static::createClient();
         $client->request(
             'PATCH',
-            '/pokemons/'.$factory->_get('id')->toString(),
+            '/avatars/'.$factory->_get('id'),
             [
                 'headers' => ['Content-Type' => 'application/merge-patch+json'],
                 'json' => [
-                    'name' => 'Pikachu',
+                    'name' => 'Eco Tycoon',
                 ],
             ],
         );
@@ -121,18 +138,18 @@ class PokemonTest extends ApiTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testUpdatePokemonWithInvalidData(): void
+    public function testUpdateAvatarWithInvalidData(): void
     {
-        $factory = PokemonFactory::random();
+        $factory = AvatarFactory::random();
 
         $client = static::createClient();
         $client->request(
             'PATCH',
-            '/pokemons/'.$factory->_get('id')->toString(),
+            '/avatars/'.$factory->_get('id'),
             [
                 'headers' => ['Content-Type' => 'application/merge-patch+json'],
                 'json' => [
-                    'name' => '', // Invalid empty name
+                    'name' => '',
                 ],
             ],
         );
@@ -140,14 +157,14 @@ class PokemonTest extends ApiTestCase
         $this->assertResponseStatusCodeSame(422);
     }
 
-    public function testDeletePokemon(): void
+    public function testDeleteAvatar(): void
     {
-        $factory = PokemonFactory::random();
+        $factory = AvatarFactory::random();
 
         $client = static::createClient();
         $client->request(
             'DELETE',
-            '/pokemons/'.$factory->_get('id')->toString(),
+            '/avatars/'.$factory->_get('id'),
             [
                 'headers' => ['Content-Type' => 'application/json'],
             ],
@@ -156,12 +173,12 @@ class PokemonTest extends ApiTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testDeleteNonExistentPokemon(): void
+    public function testDeleteNonExistentAvatar(): void
     {
         $client = static::createClient();
         $client->request(
             'DELETE',
-            '/pokemons/7ce84785-3ed8-4269-a568-ff5e79edaa70',
+            '/avatars/07d8a11b-308e-4543-8bf3-ae28bd8578fe',
             [
                 'headers' => ['Content-Type' => 'application/json'],
             ],

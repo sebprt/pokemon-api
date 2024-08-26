@@ -1,0 +1,35 @@
+App\Entity\Reward:
+  attributes:
+    name:
+      groups: ['reward:write']
+    condition:
+      groups: ['reward:write']
+    url:
+      groups: ['reward:write']
+
+App\Entity\Game:
+  attributes:
+    name:
+      groups: ['game:create', 'game:write', 'game:read']
+    description:
+      groups: ['game:create', 'game:write', 'game:read']
+    questions:
+      groups: ['game:create']
+
+App\Entity\Question:
+  attributes:
+    label:
+      groups: ['game:create', 'question:write', 'question:read']
+    media:
+      groups: ['game:create', 'question:write', 'question:read']
+    createdAt:
+      groups: ['question:read']
+    updatedAt:
+      groups: ['question:read']
+
+App\Entity\Choice:
+  attributes:
+    label:
+      groups: ['game:create', 'question:write', 'question:read']
+    isCorrect:
+      groups: ['game:create', 'question:write', 'question:read']

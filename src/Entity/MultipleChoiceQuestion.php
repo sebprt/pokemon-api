@@ -16,12 +16,11 @@ class MultipleChoiceQuestion extends Question
     #[ORM\JoinTable]
     #[ORM\JoinColumn]
     #[ORM\InverseJoinColumn(unique: true)]
-    #[ORM\ManyToMany(targetEntity: Choice::class)]
+    #[ORM\ManyToMany(targetEntity: Choice::class, cascade: ['persist'])]
     private Collection $choices;
 
     public function __construct()
     {
-        parent::__construct();
         $this->choices = new ArrayCollection();
     }
 

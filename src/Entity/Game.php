@@ -35,7 +35,7 @@ class Game
     #[ORM\JoinTable]
     #[ORM\JoinColumn]
     #[ORM\InverseJoinColumn(unique: true)]
-    #[ORM\ManyToMany(targetEntity:  Question::class, orphanRemoval: true)]
+    #[ORM\ManyToMany(targetEntity:  Question::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $questions;
 
     public function __construct()

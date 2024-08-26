@@ -2,30 +2,38 @@
 
 namespace App\Entity;
 
-use App\Repository\RewardRepository;
+use App\Entity\Trait\TimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: RewardRepository::class)]
+#[ORM\Entity]
+#[ORM\HasLifecycleCallbacks]
 class Reward
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
+    private ?Uuid $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull, Assert\NotBlank]
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Assert\NotNull]
     private array $condition = [];
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    #[ORM\Column(length: 255)]
+    #[Assert\NotNull, Assert\NotBlank, Assert\Url]
+    private ?string $url = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $updatedAt = null;
-
-    public function getId(): ?int
+    public function getId(): ?Uuid
     {
         return $this->id;
     }
@@ -54,26 +62,14 @@ class Reward
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getUrl(): ?string
     {
-        return $this->createdAt;
+        return $this->url;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setUrl(?string $url): self
     {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
+        $this->url = $url;
 
         return $this;
     }

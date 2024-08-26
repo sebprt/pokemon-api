@@ -18,101 +18,48 @@ resources:
       ApiPlatform\Metadata\Delete: ~
 
   App\Entity\Game:
-    operations:
-      ApiPlatform\Metadata\GetCollection: ~
-      ApiPlatform\Metadata\Post: ~
-      ApiPlatform\Metadata\Get: ~
-      ApiPlatform\Metadata\Put: ~
-      ApiPlatform\Metadata\Patch: ~
-      ApiPlatform\Metadata\Delete: ~
-
-  App\Entity\Question:
-    operations:
-      ApiPlatform\Metadata\GetCollection: ~
-      ApiPlatform\Metadata\Post: ~
-      ApiPlatform\Metadata\Get: ~
-      ApiPlatform\Metadata\Put: ~
-      ApiPlatform\Metadata\Patch: ~
-      ApiPlatform\Metadata\Delete: ~
-
-  App\Entity\Choice:
-    operations:
-      ApiPlatform\Metadata\GetCollection: ~
-      ApiPlatform\Metadata\Post: ~
-      ApiPlatform\Metadata\Get: ~
-      ApiPlatform\Metadata\Put: ~
-      ApiPlatform\Metadata\Patch: ~
-      ApiPlatform\Metadata\Delete: ~
-
-  App\Entity\GameSession:
     - operations:
         ApiPlatform\Metadata\GetCollection: ~
-        ApiPlatform\Metadata\Post: ~
+        ApiPlatform\Metadata\Post:
+          denormalizationContext:
+            groups: [ 'game:create' ]
         ApiPlatform\Metadata\Get: ~
-        ApiPlatform\Metadata\Put: ~
-        ApiPlatform\Metadata\Patch: ~
+        ApiPlatform\Metadata\Put:
+          denormalizationContext:
+            groups: [ 'game:write' ]
+        ApiPlatform\Metadata\Patch:
+          denormalizationContext:
+            groups: [ 'game:write' ]
         ApiPlatform\Metadata\Delete: ~
-    - uriTemplate: /users/{id}/games
+      normalizationContext:
+        groups: [ 'game:read' ]
+    - uriTemplate: '/games/{id}/questions'
+      operations:
+        ApiPlatform\Metadata\Post:
+          controller: App\Controller\AddGameQuestionController
+
+  App\Entity\Question:
+    - uriTemplate: '/games/{id}/questions'
+      itemUriTemplate: '/games/{id}/questions/{questionId}'
       uriVariables:
         id:
           fromClass: App\Entity\Game
-          toProperty: user
+          fromProperty: questions
       operations:
         ApiPlatform\Metadata\GetCollection: ~
-
-  App\Entity\Answer:
-    operations:
-      ApiPlatform\Metadata\GetCollection: ~
-      ApiPlatform\Metadata\Post: ~
-      ApiPlatform\Metadata\Get: ~
-      ApiPlatform\Metadata\Put: ~
-      ApiPlatform\Metadata\Patch: ~
-      ApiPlatform\Metadata\Delete: ~
 
   App\Entity\Reward:
     operations:
       ApiPlatform\Metadata\GetCollection: ~
-      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Post:
       ApiPlatform\Metadata\Get: ~
       ApiPlatform\Metadata\Put: ~
       ApiPlatform\Metadata\Patch: ~
       ApiPlatform\Metadata\Delete: ~
-
-  App\Entity\UserReward:
-    operations:
-      ApiPlatform\Metadata\GetCollection: ~
-      ApiPlatform\Metadata\Post: ~
-      ApiPlatform\Metadata\Get: ~
-      ApiPlatform\Metadata\Put: ~
-      ApiPlatform\Metadata\Patch: ~
-      ApiPlatform\Metadata\Delete: ~
+    denormalizationContext:
+      groups: [ 'reward:write' ]
 
   App\Entity\Avatar:
-    operations:
-      ApiPlatform\Metadata\GetCollection: ~
-      ApiPlatform\Metadata\Post: ~
-      ApiPlatform\Metadata\Get: ~
-      ApiPlatform\Metadata\Put: ~
-      ApiPlatform\Metadata\Patch: ~
-      ApiPlatform\Metadata\Delete: ~
-
-  App\Entity\UserAvatar:
-    - operations:
-        ApiPlatform\Metadata\GetCollection: ~
-        ApiPlatform\Metadata\Post: ~
-        ApiPlatform\Metadata\Get: ~
-        ApiPlatform\Metadata\Put: ~
-        ApiPlatform\Metadata\Patch: ~
-        ApiPlatform\Metadata\Delete: ~
-    - uriTemplate: /users/{id}/avatars
-      uriVariables:
-        id:
-          fromClass: App\Entity\User
-          toProperty: user
-      operations:
-        ApiPlatform\Metadata\GetCollection: ~
-
-  App\Entity\MultipleChoiceQuestion:
     operations:
       ApiPlatform\Metadata\GetCollection: ~
       ApiPlatform\Metadata\Post: ~
