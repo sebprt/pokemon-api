@@ -33,3 +33,14 @@ App\Entity\Choice:
       groups: ['game:create', 'question:write', 'question:read']
     isCorrect:
       groups: ['game:create', 'question:write', 'question:read']
+
+App\Entity\User:
+  attributes:
+    email:
+      groups: ['user:read']
+    roles:
+      groups: ['user:read']
+    createdAt:
+      groups: ['user:read']
+    experience:
+      groups: ['user:read']
