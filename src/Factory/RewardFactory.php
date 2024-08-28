@@ -16,8 +16,8 @@ final class RewardFactory extends PersistentProxyObjectFactory
     {
         return [
             'condition' => [],
-            'name' => self::faker()->text(255),
-            'url' => self::faker()->url(),
+            'name' => self::faker()->words(),
+            'url' => self::faker()->imageUrl(),
         ];
     }
 }
