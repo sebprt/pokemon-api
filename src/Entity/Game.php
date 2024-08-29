@@ -33,8 +33,8 @@ class Game
      * @var Collection<int, Question>
      */
     #[ORM\JoinTable]
-    #[ORM\JoinColumn]
-    #[ORM\InverseJoinColumn(unique: true)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    #[ORM\InverseJoinColumn(unique: true, onDelete: 'CASCADE')]
     #[ORM\ManyToMany(targetEntity:  Question::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $questions;
 

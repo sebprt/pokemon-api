@@ -30,7 +30,7 @@ abstract class Answer
     protected ?bool $isCorrect = null;
 
     #[ORM\ManyToOne(targetEntity: Question::class)]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     protected ?Question $question = null;
 
     public function getId(): ?Uuid

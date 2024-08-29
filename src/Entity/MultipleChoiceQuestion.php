@@ -14,9 +14,9 @@ class MultipleChoiceQuestion extends Question
      * @var Collection<int, Choice>
      */
     #[ORM\JoinTable]
-    #[ORM\JoinColumn]
-    #[ORM\InverseJoinColumn(unique: true)]
-    #[ORM\ManyToMany(targetEntity: Choice::class, cascade: ['persist'])]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    #[ORM\InverseJoinColumn(unique: true, onDelete: 'CASCADE')]
+    #[ORM\ManyToMany(targetEntity: Choice::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $choices;
 
     public function __construct()

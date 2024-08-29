@@ -24,7 +24,7 @@ class GameSession
     private ?User $user = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Game $game = null;
 
     #[ORM\Column(options: [
@@ -42,9 +42,9 @@ class GameSession
      * @var Collection<int, Answer>
      */
     #[ORM\JoinTable]
-    #[ORM\JoinColumn]
-    #[ORM\InverseJoinColumn(unique: true)]
-    #[ORM\ManyToMany(targetEntity: Answer::class, orphanRemoval: true)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    #[ORM\InverseJoinColumn(unique: true, onDelete: 'CASCADE')]
+    #[ORM\ManyToMany(targetEntity: Answer::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $answers;
 
     #[ORM\Column]

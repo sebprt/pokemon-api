@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 class MultipleChoiceAnswer extends Answer
 {
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Choice $choice = null;
 
     public function getChoice(): ?Choice
