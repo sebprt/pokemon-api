@@ -41,6 +41,13 @@ resources:
           controller: App\Controller\AddGameQuestionController
 
   App\Entity\Question:
+    - operations:
+        ApiPlatform\Metadata\GetCollection:
+          openapi: false
+          read: false
+        ApiPlatform\Metadata\Get:
+          openapi: false
+          read: false
     - uriTemplate: '/games/{id}/questions'
       itemUriTemplate: '/games/{id}/questions/{questionId}'
       uriVariables:

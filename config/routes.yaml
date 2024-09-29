@@ -4,10 +4,6 @@ controllers:
         namespace: App\Controller
     type: attribute
 
-api_doc:
-    path: /
-    controller: api_platform.swagger_ui.action
-
 auth:
-    path: /auth
+    path: /v1/authentication
     methods: ['POST']
