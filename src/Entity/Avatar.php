@@ -26,12 +26,6 @@ class Avatar
     #[Assert\NotNull, Assert\Positive]
     private ?int $unlockPoints = null;
 
-    #[ORM\Column(options: [
-        'default' => false,
-    ])]
-    #[Assert\Type('boolean')]
-    private ?bool $isUnlock = null;
-
     #[ORM\Column(length: 255)]
     #[Assert\NotNull, Assert\NotBlank, Assert\Url]
     private ?string $url = null;
@@ -61,18 +55,6 @@ class Avatar
     public function setUnlockPoints(int $unlockPoints): static
     {
         $this->unlockPoints = $unlockPoints;
-
-        return $this;
-    }
-
-    public function getIsUnlock(): ?bool
-    {
-        return $this->isUnlock;
-    }
-
-    public function setIsUnlock(bool $isUnlock): static
-    {
-        $this->isUnlock = $isUnlock;
 
         return $this;
     }

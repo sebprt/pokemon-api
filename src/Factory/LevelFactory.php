@@ -16,7 +16,7 @@ final class LevelFactory extends PersistentProxyObjectFactory
     {
         return [
             'number' => self::faker()->randomNumber(),
-            'requiredPoints' => self::faker()->randomNumber(),
+            'experienceRequired' => self::faker()->randomNumber(),
         ];
     }
 }

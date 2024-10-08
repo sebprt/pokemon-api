@@ -29,20 +29,6 @@ class Game
     #[Assert\NotNull, Assert\NotBlank]
     private ?string $description = null;
 
-    /**
-     * @var Collection<int, Question>
-     */
-    #[ORM\JoinTable]
-    #[ORM\JoinColumn(onDelete: 'CASCADE')]
-    #[ORM\InverseJoinColumn(unique: true, onDelete: 'CASCADE')]
-    #[ORM\ManyToMany(targetEntity:  Question::class, cascade: ['persist'], orphanRemoval: true)]
-    private Collection $questions;
-
-    public function __construct()
-    {
-        $this->questions = new ArrayCollection();
-    }
-
     public function getId(): ?Uuid
     {
         return $this->id;
@@ -68,30 +54,6 @@ class Game
     public function setDescription(string $description): static
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Question>
-     */
-    public function getQuestions(): Collection
-    {
-        return $this->questions;
-    }
-
-    public function addQuestion(Question $question): static
-    {
-        if (!$this->questions->contains($question)) {
-            $this->questions->add($question);
-        }
-
-        return $this;
-    }
-
-    public function removeQuestion(Question $question): static
-    {
-        $this->questions->removeElement($question);
 
         return $this;
     }

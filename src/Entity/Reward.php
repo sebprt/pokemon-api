@@ -25,13 +25,12 @@ class Reward
     #[Assert\NotNull, Assert\NotBlank]
     private ?string $name = null;
 
-    #[ORM\Column]
-    #[Assert\NotNull]
-    private array $condition = [];
-
     #[ORM\Column(length: 255)]
     #[Assert\NotNull, Assert\NotBlank, Assert\Url]
     private ?string $url = null;
+
+    #[ORM\Column]
+    private ?int $unlockPoints = null;
 
     public function getId(): ?Uuid
     {
@@ -50,18 +49,6 @@ class Reward
         return $this;
     }
 
-    public function getCondition(): array
-    {
-        return $this->condition;
-    }
-
-    public function setCondition(array $condition): static
-    {
-        $this->condition = $condition;
-
-        return $this;
-    }
-
     public function getUrl(): ?string
     {
         return $this->url;
@@ -70,6 +57,18 @@ class Reward
     public function setUrl(?string $url): self
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    public function getUnlockPoints(): ?int
+    {
+        return $this->unlockPoints;
+    }
+
+    public function setUnlockPoints(int $unlockPoints): static
+    {
+        $this->unlockPoints = $unlockPoints;
 
         return $this;
     }
