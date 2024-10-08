@@ -30,7 +30,7 @@ class Reward
     private ?string $url = null;
 
     #[ORM\Column]
-    private ?int $pointRequired = null;
+    private ?int $unlockPoints = null;
 
     public function getId(): ?Uuid
     {
@@ -61,14 +61,14 @@ class Reward
         return $this;
     }
 
-    public function getPointRequired(): ?int
+    public function getUnlockPoints(): ?int
     {
-        return $this->pointRequired;
+        return $this->unlockPoints;
     }
 
-    public function setPointRequired(int $pointRequired): static
+    public function setUnlockPoints(int $unlockPoints): static
     {
-        $this->pointRequired = $pointRequired;
+        $this->unlockPoints = $unlockPoints;
 
         return $this;
     }

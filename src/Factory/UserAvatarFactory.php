@@ -16,7 +16,6 @@ final class UserAvatarFactory extends PersistentProxyObjectFactory
     {
         return [
             'avatar' => AvatarFactory::random(),
-            'isCurrent' => self::faker()->boolean(),
             'unlockedAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
         ];
     }

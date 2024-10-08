@@ -2,13 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRewardRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity(repositoryClass: UserRewardRepository::class)]
+#[ORM\Entity]
 class UserReward
 {
     #[ORM\Id]

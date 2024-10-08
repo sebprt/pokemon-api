@@ -2,13 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\UserAvatarRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity(repositoryClass: UserAvatarRepository::class)]
+#[ORM\Entity]
 class UserAvatar
 {
     #[ORM\Id]
@@ -20,9 +19,6 @@ class UserAvatar
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Avatar $avatar = null;
-
-    #[ORM\Column]
-    private ?bool $isCurrent = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $unlockedAt = null;
@@ -40,18 +36,6 @@ class UserAvatar
     public function setAvatar(?Avatar $avatar): static
     {
         $this->avatar = $avatar;
-
-        return $this;
-    }
-
-    public function getIsCurrent(): ?bool
-    {
-        return $this->isCurrent;
-    }
-
-    public function setIsCurrent(bool $isCurrent): static
-    {
-        $this->isCurrent = $isCurrent;
 
         return $this;
     }

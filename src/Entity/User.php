@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Trait\TimestampableTrait;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -18,6 +19,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
@@ -41,10 +44,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotNull, Assert\NotBlank, Assert\PasswordStrength, Assert\NotCompromisedPassword]
     private ?string $password = null;
 
-    #[ORM\Column]
-    #[Assert\NotNull]
-    private ?\DateTimeImmutable $createdAt = null;
-
     /**
      * @var Collection<int, UserReward>
      */
@@ -53,11 +52,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\InverseJoinColumn(unique: true)]
     #[ORM\ManyToMany(targetEntity: UserReward::class, orphanRemoval: true)]
     private Collection $userRewards;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotNull, Assert\Type(Level::class)]
-    private ?Level $level = null;
 
     /**
      * @var Collection<int, UserAvatar>
@@ -72,19 +66,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Collection<int, GameSession>
      */
     #[ORM\OneToMany(targetEntity: GameSession::class, mappedBy: 'user', orphanRemoval: true)]
-    private Collection $userGames;
+    private Collection $sessions;
 
-    #[ORM\Column(options: [
-        'default' => 0,
-    ])]
-    #[Assert\NotNull, Assert\PositiveOrZero]
-    private ?int $experience = 0;
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?UserProfile $profile = null;
 
     public function __construct()
     {
         $this->userRewards = new ArrayCollection();
         $this->userAvatars = new ArrayCollection();
-        $this->userGames = new ArrayCollection();
+        $this->sessions = new ArrayCollection();
     }
 
     public function getId(): ?Uuid
@@ -162,18 +154,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, UserReward>
      */
@@ -237,15 +217,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, GameSession>
      */
-    public function getUserGames(): Collection
+    public function getSessions(): Collection
     {
-        return $this->userGames;
+        return $this->sessions;
     }
 
     public function addUserGame(GameSession $userGame): static
     {
-        if (!$this->userGames->contains($userGame)) {
-            $this->userGames->add($userGame);
+        if (!$this->sessions->contains($userGame)) {
+            $this->sessions->add($userGame);
             $userGame->setUser($this);
         }
 
@@ -254,7 +234,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeUserGame(GameSession $userGame): static
     {
-        if ($this->userGames->removeElement($userGame)) {
+        if ($this->sessions->removeElement($userGame)) {
             // set the owning side to null (unless already changed)
             if ($userGame->getUser() === $this) {
                 $userGame->setUser(null);
@@ -272,6 +252,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setExperience(int $experience): static
     {
         $this->experience = $experience;
+
+        return $this;
+    }
+
+    public function getProfile(): ?UserProfile
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(UserProfile $profile): static
+    {
+        $this->profile = $profile;
 
         return $this;
     }

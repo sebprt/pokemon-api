@@ -21,10 +21,12 @@ final class GameSessionFactory extends PersistentProxyObjectFactory
             'startedAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'endedAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'user' => UserFactory::random(),
-            'answers' => [
-                ...MultipleChoiceAnswerFactory::createRange(1, 20),
-                ...TextInputAnswerFactory::createRange(1, 20),
-            ]
+            'questionsAnswered' => self::faker()->randomNumber(),
+            'correctAnswers' => self::faker()->randomNumber(),
+            'accuracy' => self::faker()->randomFloat(),
+            'currentStreak' => self::faker()->randomNumber(),
+            'maxStreak' => self::faker()->randomNumber(),
+            'earnedExperience' => self::faker()->randomNumber(),
         ];
     }
 }

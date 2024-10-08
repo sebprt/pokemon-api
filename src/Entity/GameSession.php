@@ -2,15 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\UserGameRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\GameSessionRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity(repositoryClass: UserGameRepository::class)]
+#[ORM\Entity(repositoryClass: GameSessionRepository::class)]
 class GameSession
 {
     #[ORM\Id]
@@ -55,6 +53,9 @@ class GameSession
 
     #[ORM\Column]
     private ?int $maxStreak = null;
+
+    #[ORM\Column]
+    private ?int $earnedExperience = null;
 
     public function getId(): ?Uuid
     {
@@ -189,6 +190,18 @@ class GameSession
     public function setMaxStreak(int $maxStreak): static
     {
         $this->maxStreak = $maxStreak;
+
+        return $this;
+    }
+
+    public function getEarnedExperience(): ?int
+    {
+        return $this->earnedExperience;
+    }
+
+    public function setEarnedExperience(int $earnedExperience): static
+    {
+        $this->earnedExperience = $earnedExperience;
 
         return $this;
     }

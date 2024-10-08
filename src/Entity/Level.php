@@ -25,21 +25,21 @@ class Level
 
     #[ORM\Column(type: Types::INTEGER)]
     #[Assert\NotNull, Assert\Positive]
-    private ?int $requiredPoints = null;
+    private ?int $experienceRequired = null;
 
     public function getId(): ?Uuid
     {
         return $this->id;
     }
 
-    public function getRequiredPoints(): ?int
+    public function getExperienceRequired(): ?int
     {
-        return $this->requiredPoints;
+        return $this->experienceRequired;
     }
 
-    public function setRequiredPoints(int $requiredPoints): static
+    public function setExperienceRequired(int $experienceRequired): static
     {
-        $this->requiredPoints = $requiredPoints;
+        $this->experienceRequired = $experienceRequired;
 
         return $this;
     }

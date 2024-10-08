@@ -16,7 +16,6 @@ final class AvatarFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'isUnlock' => self::faker()->boolean(),
             'name' => self::faker()->word(),
             'unlockPoints' => self::faker()->randomNumber(),
             'url' => self::faker()->imageUrl(),
