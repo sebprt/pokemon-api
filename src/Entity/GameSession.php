@@ -17,7 +17,7 @@ class GameSession
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
     private ?Uuid $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'userGames')]
+    #[ORM\ManyToOne(inversedBy: 'sessions')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
