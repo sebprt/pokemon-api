@@ -38,22 +38,23 @@ class GameSession
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $endedAt = null;
 
-    /**
-     * @var Collection<int, Answer>
-     */
-    #[ORM\JoinTable]
-    #[ORM\JoinColumn(onDelete: 'CASCADE')]
-    #[ORM\InverseJoinColumn(unique: true, onDelete: 'CASCADE')]
-    #[ORM\ManyToMany(targetEntity: Answer::class, cascade: ['persist'], orphanRemoval: true)]
-    private Collection $answers;
-
     #[ORM\Column]
     private ?bool $isCompleted = null;
 
-    public function __construct()
-    {
-        $this->answers = new ArrayCollection();
-    }
+    #[ORM\Column]
+    private ?int $questionsAnswered = null;
+
+    #[ORM\Column]
+    private ?int $correctAnswers = null;
+
+    #[ORM\Column]
+    private ?float $accuracy = null;
+
+    #[ORM\Column]
+    private ?int $currentStreak = null;
+
+    #[ORM\Column]
+    private ?int $maxStreak = null;
 
     public function getId(): ?Uuid
     {
@@ -120,30 +121,6 @@ class GameSession
         return $this;
     }
 
-    /**
-     * @return Collection<int, Answer>
-     */
-    public function getAnswers(): Collection
-    {
-        return $this->answers;
-    }
-
-    public function addAnswer(Answer $answer): static
-    {
-        if (!$this->answers->contains($answer)) {
-            $this->answers->add($answer);
-        }
-
-        return $this;
-    }
-
-    public function removeAnswer(Answer $answer): static
-    {
-        $this->answers->removeElement($answer);
-
-        return $this;
-    }
-
     public function getIsCompleted(): ?bool
     {
         return $this->isCompleted;
@@ -152,6 +129,66 @@ class GameSession
     public function setIsCompleted(bool $isCompleted): static
     {
         $this->isCompleted = $isCompleted;
+
+        return $this;
+    }
+
+    public function getQuestionsAnswered(): ?int
+    {
+        return $this->questionsAnswered;
+    }
+
+    public function setQuestionsAnswered(int $questionsAnswered): static
+    {
+        $this->questionsAnswered = $questionsAnswered;
+
+        return $this;
+    }
+
+    public function getCorrectAnswers(): ?int
+    {
+        return $this->correctAnswers;
+    }
+
+    public function setCorrectAnswers(int $correctAnswers): static
+    {
+        $this->correctAnswers = $correctAnswers;
+
+        return $this;
+    }
+
+    public function getAccuracy(): ?float
+    {
+        return $this->accuracy;
+    }
+
+    public function setAccuracy(float $accuracy): static
+    {
+        $this->accuracy = $accuracy;
+
+        return $this;
+    }
+
+    public function getCurrentStreak(): ?int
+    {
+        return $this->currentStreak;
+    }
+
+    public function setCurrentStreak(int $currentStreak): static
+    {
+        $this->currentStreak = $currentStreak;
+
+        return $this;
+    }
+
+    public function getMaxStreak(): ?int
+    {
+        return $this->maxStreak;
+    }
+
+    public function setMaxStreak(int $maxStreak): static
+    {
+        $this->maxStreak = $maxStreak;
 
         return $this;
     }
