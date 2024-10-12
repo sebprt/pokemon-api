@@ -9,17 +9,30 @@ resources:
         ApiPlatform\Metadata\Delete: ~
       normalizationContext:
         groups: [ 'user:read' ]
+    - uriTemplate: /users/{id}/avatars
+      uriVariables:
+        id:
+          fromClass: App\Entity\User
+          fromProperty: userAvatars
+      operations:
+        ApiPlatform\Metadata\Post: ~
 
   App\Entity\UserProfile:
-    uriTemplate: /users/{id}/profile
-    uriVariables:
-      id:
-        fromClass: App\Entity\User
-        fromProperty: profile
-    operations:
-      ApiPlatform\Metadata\Get:
-        provider: App\State\UserProfileProvider
-      ApiPlatform\Metadata\Patch: ~
+    - operations:
+        ApiPlatform\Metadata\Get:
+          output: false
+          read: false
+          controller: ApiPlatform\Action\NotFoundAction
+          openapi: false
+    - uriTemplate: /users/{id}/profile
+      uriVariables:
+        id:
+          fromClass: App\Entity\User
+          fromProperty: profile
+      operations:
+        ApiPlatform\Metadata\Get:
+          provider: App\State\UserProfileProvider
+        ApiPlatform\Metadata\Patch: ~
 
   App\Entity\GameSession:
     uriTemplate: /users/{id}/sessions
@@ -62,7 +75,6 @@ resources:
           fromProperty: userRewards
       operations:
         ApiPlatform\Metadata\GetCollection: ~
-        ApiPlatform\Metadata\Post: ~
 
   App\Entity\Avatar:
     - operations:
@@ -78,4 +90,3 @@ resources:
           fromProperty: userAvatars
       operations:
         ApiPlatform\Metadata\GetCollection: ~
-        ApiPlatform\Metadata\Post: ~

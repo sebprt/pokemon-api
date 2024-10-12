@@ -3,11 +3,14 @@
 namespace App\Tests\functional;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
+use App\Entity\UserAvatar;
 use App\Factory\AvatarFactory;
 use App\Factory\LevelFactory;
 use App\Factory\RewardFactory;
+use App\Factory\UserAvatarFactory;
 use App\Factory\UserFactory;
 use App\Story\DefaultUserstory;
+use Faker\Core\DateTime;
 use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
 
@@ -174,5 +177,124 @@ class UserTest extends ApiTestCase
         );
 
         $this->assertResponseStatusCodeSame(404);
+    }
+
+    public function testGetUserAvatars(): void
+    {
+        $factory = UserFactory::random();
+
+        $client = static::createClient();
+        $response = $client->request(
+            'GET',
+            '/users/'.$factory->_get('id')->toString().'/avatars',
+            ['headers' => ['Content-Type' => 'application/json']]
+        );
+
+        $this->assertResponseIsSuccessful();
+    }
+
+    /** Todo: finish this test */
+    public function testCreateUserAvatars(): void
+    {
+        $factory = UserFactory::random();
+        $avatarFactory = AvatarFactory::random();
+
+        $client = static::createClient();
+        $client->request(
+            'POST',
+            '/users/'.$factory->_get('id')->toString().'/avatars',
+            [
+                'headers' => ['Content-Type' => 'application/json'],
+                'json' => [
+                    'avatar' => '/avatars/' . $avatarFactory->getId()->toString(),
+                    'unlockedAt' => new DateTime()
+                ]
+            ]
+        );
+
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function testGetUserRewards(): void
+    {
+        $factory = UserFactory::random();
+
+        $client = static::createClient();
+        $client->request(
+            'GET',
+            '/users/'.$factory->_get('id')->toString().'/rewards',
+            ['headers' => ['Content-Type' => 'application/json']]
+        );
+
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function testCreateUserReward(): void
+    {
+        $factory = UserFactory::random();
+
+        $client = static::createClient();
+        $client->request(
+            'POST',
+            '/users/'.$factory->_get('id')->toString().'/rewards',
+            [
+                'headers' => ['Content-Type' => 'application/json'],
+                'json' => [
+
+                ]
+            ]
+        );
+
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function testGetUserSessions(): void
+    {
+        $factory = UserFactory::random();
+
+        $client = static::createClient();
+        $client->request(
+            'GET',
+            '/users/'.$factory->_get('id')->toString().'/sessions',
+            ['headers' => ['Content-Type' => 'application/json']]
+        );
+
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function testGetUserProfile(): void
+    {
+        $factory = UserFactory::random();
+
+        $client = static::createClient();
+        $client->request(
+            'GET',
+            '/users/'.$factory->_get('id')->toString().'/profile',
+            ['headers' => ['Content-Type' => 'application/json']]
+        );
+
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function testEditUserProfile(): void
+    {
+        $factory = UserFactory::random();
+
+        $client = static::createClient();
+        $client->request(
+            'PATCH',
+            '/users/'.$factory->_get('id')->toString().'/profile',
+            [
+                'headers' => ['Content-Type' => 'application/merge-patch+json'],
+                'json' => [
+                    'totalPoints' => 123,
+                    'experiencePoints' => 123,
+                    'level' => 123,
+                    'gamesPlayed' => 1,
+                ],
+            ]
+        );
+
+        $this->assertResponseIsSuccessful();
     }
 }

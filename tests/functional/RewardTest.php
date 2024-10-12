@@ -67,9 +67,7 @@ class RewardTest extends ApiTestCase
                 'headers' => ['Content-Type' => 'application/json'],
                 'json' => [
                     'name' => 'Strategic Warfare',
-                    'condition' => [
-                        'condition'
-                    ],
+                    'unlockPoints' => 50,
                     'url' => 'https://example.com'
                 ],
             ],
@@ -115,26 +113,6 @@ class RewardTest extends ApiTestCase
         );
 
         $this->assertResponseIsSuccessful();
-    }
-
-    public function testUpdateRewardWithBadRequest(): void
-    {
-        $factory = RewardFactory::random();
-
-        $client = static::createClient();
-        $client->request(
-            'PATCH',
-            '/rewards/'.$factory->_get('id')->toString(),
-            [
-                'headers' => ['Content-Type' => 'application/merge-patch+json'],
-                'json' => [
-                    // 'condition' field should be an array
-                    'condition' => 'Get 1000 points.',
-                ],
-            ],
-        );
-
-        $this->assertResponseStatusCodeSame(400);
     }
 
     public function testDeleteReward(): void

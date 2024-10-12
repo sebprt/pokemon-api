@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 class UserReward
@@ -21,6 +22,7 @@ class UserReward
     private ?Reward $reward = null;
 
     #[ORM\Column]
+    #[Assert\NotNull, Assert\DateTime]
     private ?\DateTimeImmutable $unlockedAt = null;
 
     public function getId(): ?Uuid
