@@ -17,19 +17,19 @@ class UserProfile
     private ?Uuid $id = null;
 
     #[ORM\Column]
-    private ?int $totalPoints = null;
+    private ?int $totalPoints = 0;
 
     #[ORM\Column]
-    private ?int $experiencePoints = null;
+    private ?int $experiencePoints = 0;
 
     #[ORM\Column]
-    private ?int $level = null;
+    private ?int $level = 1;
 
     #[ORM\Column]
-    private ?int $gamesPlayed = null;
+    private ?int $gamesPlayed = 0;
 
     #[ORM\Column]
-    private ?float $accuracyRate = null;
+    private ?float $accuracyRate = 0.0;
 
     #[ORM\ManyToOne]
     private ?Avatar $currentAvatar = null;

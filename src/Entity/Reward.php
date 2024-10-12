@@ -30,6 +30,7 @@ class Reward
     private ?string $url = null;
 
     #[ORM\Column]
+    #[Assert\NotNull, Assert\NotBlank]
     private ?int $unlockPoints = null;
 
     public function getId(): ?Uuid

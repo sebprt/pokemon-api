@@ -2,7 +2,7 @@ App\Entity\Reward:
   attributes:
     name:
       groups: ['reward:write']
-    condition:
+    unlockPoints:
       groups: ['reward:write']
     url:
       groups: ['reward:write']
@@ -15,30 +15,6 @@ App\Entity\Game:
       groups: ['game:create', 'game:write', 'game:read']
     description:
       groups: ['game:create', 'game:write', 'game:read']
-    questions:
-      groups: ['game:create']
-
-App\Entity\Question:
-  attributes:
-    id:
-      groups: [ 'question:read' ]
-    label:
-      groups: ['game:create', 'question:write', 'question:read']
-    media:
-      groups: ['game:create', 'question:write', 'question:read']
-    createdAt:
-      groups: ['question:read']
-    updatedAt:
-      groups: ['question:read']
-
-App\Entity\Choice:
-  attributes:
-    id:
-      groups: [ 'question:read' ]
-    label:
-      groups: ['game:create', 'question:write', 'question:read']
-    isCorrect:
-      groups: ['game:create', 'question:write', 'question:read']
 
 App\Entity\User:
   attributes:

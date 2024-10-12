@@ -5,9 +5,9 @@ controllers:
     type: attribute
 
 api_doc:
-    path: /
+    path: /api
     controller: api_platform.swagger_ui.action
 
 auth:
-    path: /auth
+    path: /login
     methods: ['POST']

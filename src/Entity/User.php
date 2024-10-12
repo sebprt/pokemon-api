@@ -244,18 +244,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getExperience(): ?int
-    {
-        return $this->experience;
-    }
-
-    public function setExperience(int $experience): static
-    {
-        $this->experience = $experience;
-
-        return $this;
-    }
-
     public function getProfile(): ?UserProfile
     {
         return $this->profile;

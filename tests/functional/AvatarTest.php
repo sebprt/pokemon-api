@@ -107,11 +107,10 @@ class AvatarTest extends ApiTestCase
             [
                 'headers' => ['Content-Type' => 'application/json'],
                 'json' => [
-                    // 'isUnlock' field is not a boolean
+                    // 'unlockPoints' field should be an integer
                     'name' => 'Strategic Warfare',
                     'url' => 'https://example.com',
-                    'unlockPoints' => 0,
-                    'isUnlock' => 1,
+                    'unlockPoints' => '0',
                 ],
             ],
         );

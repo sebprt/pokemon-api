@@ -2,20 +2,39 @@ resources:
   App\Entity\User:
     - operations:
         ApiPlatform\Metadata\GetCollection: ~
-        ApiPlatform\Metadata\Post: ~
+        ApiPlatform\Metadata\Post:
+          processor: App\State\UserProfileProcessor
         ApiPlatform\Metadata\Get: ~
-        ApiPlatform\Metadata\Put: ~
         ApiPlatform\Metadata\Patch: ~
         ApiPlatform\Metadata\Delete: ~
       normalizationContext:
         groups: [ 'user:read' ]
+
+  App\Entity\UserProfile:
+    uriTemplate: /users/{id}/profile
+    uriVariables:
+      id:
+        fromClass: App\Entity\User
+        fromProperty: profile
+    operations:
+      ApiPlatform\Metadata\Get:
+        provider: App\State\UserProfileProvider
+      ApiPlatform\Metadata\Patch: ~
+
+  App\Entity\GameSession:
+    uriTemplate: /users/{id}/sessions
+    uriVariables:
+      id:
+        fromClass: App\Entity\User
+        fromProperty: sessions
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
 
   App\Entity\Level:
     operations:
       ApiPlatform\Metadata\GetCollection: ~
       ApiPlatform\Metadata\Post: ~
       ApiPlatform\Metadata\Get: ~
-      ApiPlatform\Metadata\Put: ~
       ApiPlatform\Metadata\Patch: ~
       ApiPlatform\Metadata\Delete: ~
 
@@ -24,26 +43,39 @@ resources:
       ApiPlatform\Metadata\GetCollection: ~
       ApiPlatform\Metadata\Post: ~
       ApiPlatform\Metadata\Get: ~
-      ApiPlatform\Metadata\Put: ~
       ApiPlatform\Metadata\Patch: ~
       ApiPlatform\Metadata\Delete: ~
 
   App\Entity\Reward:
-    operations:
-      ApiPlatform\Metadata\GetCollection: ~
-      ApiPlatform\Metadata\Post:
-      ApiPlatform\Metadata\Get: ~
-      ApiPlatform\Metadata\Put: ~
-      ApiPlatform\Metadata\Patch: ~
-      ApiPlatform\Metadata\Delete: ~
-    denormalizationContext:
-      groups: [ 'reward:write' ]
+    - operations:
+        ApiPlatform\Metadata\GetCollection: ~
+        ApiPlatform\Metadata\Post:
+        ApiPlatform\Metadata\Get: ~
+        ApiPlatform\Metadata\Patch: ~
+        ApiPlatform\Metadata\Delete: ~
+      denormalizationContext:
+        groups: [ 'reward:write' ]
+    - uriTemplate: /users/{id}/rewards
+      uriVariables:
+        id:
+          fromClass: App\Entity\User
+          fromProperty: userRewards
+      operations:
+        ApiPlatform\Metadata\GetCollection: ~
+        ApiPlatform\Metadata\Post: ~
 
   App\Entity\Avatar:
-    operations:
-      ApiPlatform\Metadata\GetCollection: ~
-      ApiPlatform\Metadata\Post: ~
-      ApiPlatform\Metadata\Get: ~
-      ApiPlatform\Metadata\Put: ~
-      ApiPlatform\Metadata\Patch: ~
-      ApiPlatform\Metadata\Delete: ~
+    - operations:
+        ApiPlatform\Metadata\GetCollection: ~
+        ApiPlatform\Metadata\Post: ~
+        ApiPlatform\Metadata\Get: ~
+        ApiPlatform\Metadata\Patch: ~
+        ApiPlatform\Metadata\Delete: ~
+    - uriTemplate: /users/{id}/avatars
+      uriVariables:
+        id:
+          fromClass: App\Entity\User
+          fromProperty: userAvatars
+      operations:
+        ApiPlatform\Metadata\GetCollection: ~
+        ApiPlatform\Metadata\Post: ~
