@@ -70,17 +70,17 @@ resources:
       ApiPlatform\Metadata\Delete: ~
 
   App\Entity\UserReward:
-    - uriTemplate: /users/{userId}/rewards
+    - uriTemplate: /users/{id}/rewards
       uriVariables:
-        userId:
+        id:
           fromClass: App\Entity\User
           fromProperty: userRewards
       operations:
         ApiPlatform\Metadata\GetCollection: ~
         ApiPlatform\Metadata\Post: ~
-    - uriTemplate: /users/{userId}/rewards/{rewardId}
+    - uriTemplate: /users/{id}/rewards/{rewardId}
       uriVariables:
-        userId:
+        id:
           fromClass: App\Entity\User
           fromProperty: userRewards
         rewardId:
@@ -89,17 +89,17 @@ resources:
         ApiPlatform\Metadata\Delete: ~
 
   App\Entity\UserAvatar:
-    - uriTemplate: /users/{userId}/avatars
+    - uriTemplate: /users/{id}/avatars
       uriVariables:
-        userId:
+        id:
           fromClass: App\Entity\User
           fromProperty: userAvatars
       operations:
         ApiPlatform\Metadata\GetCollection: ~
         ApiPlatform\Metadata\Post: ~
-    - uriTemplate: /users/{userId}/avatars/{rewardId}
+    - uriTemplate: /users/{id}/avatars/{rewardId}
       uriVariables:
-        userId:
+        id:
           fromClass: App\Entity\User
           fromProperty: userAvatars
         rewardId:
