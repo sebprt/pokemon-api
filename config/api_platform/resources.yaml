@@ -1,21 +1,13 @@
 resources:
   App\Entity\User:
-    - operations:
-        ApiPlatform\Metadata\GetCollection: ~
-        ApiPlatform\Metadata\Post:
-          processor: App\State\UserProfileProcessor
-        ApiPlatform\Metadata\Get: ~
-        ApiPlatform\Metadata\Patch: ~
-        ApiPlatform\Metadata\Delete: ~
-      normalizationContext:
-        groups: [ 'user:read' ]
-    - uriTemplate: /users/{id}/avatars
-      uriVariables:
-        id:
-          fromClass: App\Entity\User
-          fromProperty: userAvatars
-      operations:
-        ApiPlatform\Metadata\Post: ~
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+    normalizationContext:
+      groups: [ 'user:read' ]
 
   App\Entity\UserProfile:
     - operations:
@@ -30,8 +22,7 @@ resources:
           fromClass: App\Entity\User
           fromProperty: profile
       operations:
-        ApiPlatform\Metadata\Get:
-          provider: App\State\UserProfileProvider
+        ApiPlatform\Metadata\Get: ~
         ApiPlatform\Metadata\Patch: ~
 
   App\Entity\GameSession:
@@ -42,6 +33,7 @@ resources:
         fromProperty: sessions
     operations:
       ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
 
   App\Entity\Level:
     operations:
@@ -60,33 +52,57 @@ resources:
       ApiPlatform\Metadata\Delete: ~
 
   App\Entity\Reward:
-    - operations:
-        ApiPlatform\Metadata\GetCollection: ~
-        ApiPlatform\Metadata\Post:
-        ApiPlatform\Metadata\Get: ~
-        ApiPlatform\Metadata\Patch: ~
-        ApiPlatform\Metadata\Delete: ~
-      denormalizationContext:
-        groups: [ 'reward:write' ]
-    - uriTemplate: /users/{id}/rewards
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post:
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+    denormalizationContext:
+      groups: [ 'reward:write' ]
+
+  App\Entity\Avatar:
+    operations:
+      ApiPlatform\Metadata\GetCollection: ~
+      ApiPlatform\Metadata\Post: ~
+      ApiPlatform\Metadata\Get: ~
+      ApiPlatform\Metadata\Patch: ~
+      ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\UserReward:
+    - uriTemplate: /users/{userId}/rewards
       uriVariables:
-        id:
+        userId:
           fromClass: App\Entity\User
           fromProperty: userRewards
       operations:
         ApiPlatform\Metadata\GetCollection: ~
-
-  App\Entity\Avatar:
-    - operations:
-        ApiPlatform\Metadata\GetCollection: ~
         ApiPlatform\Metadata\Post: ~
-        ApiPlatform\Metadata\Get: ~
-        ApiPlatform\Metadata\Patch: ~
-        ApiPlatform\Metadata\Delete: ~
-    - uriTemplate: /users/{id}/avatars
+    - uriTemplate: /users/{userId}/rewards/{rewardId}
       uriVariables:
-        id:
+        userId:
+          fromClass: App\Entity\User
+          fromProperty: userRewards
+        rewardId:
+          fromClass: App\Entity\UserReward
+      operations:
+        ApiPlatform\Metadata\Delete: ~
+
+  App\Entity\UserAvatar:
+    - uriTemplate: /users/{userId}/avatars
+      uriVariables:
+        userId:
           fromClass: App\Entity\User
           fromProperty: userAvatars
       operations:
         ApiPlatform\Metadata\GetCollection: ~
+        ApiPlatform\Metadata\Post: ~
+    - uriTemplate: /users/{userId}/avatars/{rewardId}
+      uriVariables:
+        userId:
+          fromClass: App\Entity\User
+          fromProperty: userAvatars
+        rewardId:
+          fromClass: App\Entity\UserAvatar
+      operations:
+        ApiPlatform\Metadata\Delete: ~

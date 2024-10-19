@@ -2,6 +2,7 @@
 
 namespace App\Factory;
 
+use App\Entity\User;
 use App\Entity\UserReward;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
@@ -15,6 +16,7 @@ final class UserRewardFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
+            'user' => UserFactory::random(),
             'reward' => RewardFactory::random(),
             'unlockedAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
         ];

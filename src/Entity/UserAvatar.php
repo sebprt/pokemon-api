@@ -17,6 +17,10 @@ class UserAvatar
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
     private ?Uuid $id = null;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'userRewards')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Avatar $avatar = null;
@@ -28,6 +32,18 @@ class UserAvatar
     public function getId(): ?Uuid
     {
         return $this->id;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user = null): static
+    {
+        $this->user = $user;
+
+        return $this;
     }
 
     public function getAvatar(): ?Avatar
