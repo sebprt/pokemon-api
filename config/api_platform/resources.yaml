@@ -78,15 +78,6 @@ resources:
       operations:
         ApiPlatform\Metadata\GetCollection: ~
         ApiPlatform\Metadata\Post: ~
-    - uriTemplate: /users/{id}/rewards/{rewardId}
-      uriVariables:
-        id:
-          fromClass: App\Entity\User
-          fromProperty: userRewards
-        rewardId:
-          fromClass: App\Entity\UserReward
-      operations:
-        ApiPlatform\Metadata\Delete: ~
 
   App\Entity\UserAvatar:
     - uriTemplate: /users/{id}/avatars
@@ -97,12 +88,3 @@ resources:
       operations:
         ApiPlatform\Metadata\GetCollection: ~
         ApiPlatform\Metadata\Post: ~
-    - uriTemplate: /users/{id}/avatars/{rewardId}
-      uriVariables:
-        id:
-          fromClass: App\Entity\User
-          fromProperty: userAvatars
-        rewardId:
-          fromClass: App\Entity\UserAvatar
-      operations:
-        ApiPlatform\Metadata\Delete: ~
