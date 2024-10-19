@@ -25,8 +25,6 @@ final class UserFactory extends PersistentProxyObjectFactory
             'roles' => [],
             'createdAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'updatedAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
-            'userRewards' => UserRewardFactory::createRange(1, 100),
-            'userAvatars' => UserAvatarFactory::createRange(1, 50),
             'profile' => UserProfileFactory::createOne(),
         ];
     }

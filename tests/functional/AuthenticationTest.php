@@ -37,7 +37,7 @@ class AuthenticationTest extends ApiTestCase
 
         $client->request(
             'POST',
-            '/auth',
+            '/login',
             [
                 'json' => [
                     'email' => 'admin@example.com',
@@ -56,7 +56,7 @@ class AuthenticationTest extends ApiTestCase
 
         $client->request(
             'POST',
-            '/auth',
+            '/login',
             [
                 'json' => [
                     'email' => $faker->email(),
@@ -74,7 +74,7 @@ class AuthenticationTest extends ApiTestCase
 
         $client->request(
             'POST',
-            '/auth',
+            '/login',
             [
                 'json' => [
                     // Missing 'password' field

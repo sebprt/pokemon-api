@@ -26,5 +26,14 @@ App\Entity\User:
       groups: ['user:read']
     createdAt:
       groups: ['user:read']
-    experience:
+    updatedAt:
       groups: ['user:read']
+    userAvatars:
+      groups: ['user:avatar:write']
+
+App\Entity\UserAvatar:
+  attributes:
+    unlockedAt:
+      groups: ['user:avatar:write']
+    avatar:
+      groups: ['user:avatar:write']

@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: GameSessionRepository::class)]
 class GameSession
@@ -28,6 +29,7 @@ class GameSession
     #[ORM\Column(options: [
         'default' => 0,
     ])]
+    #[Assert\NotNull, Assert\PositiveOrZero]
     private ?int $score = null;
 
     #[ORM\Column(nullable: false)]
@@ -40,18 +42,23 @@ class GameSession
     private ?bool $isCompleted = null;
 
     #[ORM\Column]
+    #[Assert\NotNull, Assert\Positive]
     private ?int $questionsAnswered = null;
 
     #[ORM\Column]
+    #[Assert\NotNull, Assert\PositiveOrZero]
     private ?int $correctAnswers = null;
 
     #[ORM\Column]
+    #[Assert\NotNull]
     private ?float $accuracy = null;
 
     #[ORM\Column]
+    #[Assert\NotNull, Assert\PositiveOrZero]
     private ?int $currentStreak = null;
 
     #[ORM\Column]
+    #[Assert\NotNull, Assert\PositiveOrZero]
     private ?int $maxStreak = null;
 
     #[ORM\Column]

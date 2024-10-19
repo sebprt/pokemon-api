@@ -24,7 +24,7 @@ class Level
     private ?int $number = null;
 
     #[ORM\Column(type: Types::INTEGER)]
-    #[Assert\NotNull, Assert\Positive]
+    #[Assert\NotNull, Assert\PositiveOrZero]
     private ?int $experienceRequired = null;
 
     public function getId(): ?Uuid

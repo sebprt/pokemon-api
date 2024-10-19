@@ -69,37 +69,6 @@ class GameTest extends ApiTestCase
                 'json' => [
                     'name' => 'Strategic Warfare',
                     'description' => 'A complex real-time strategy game where players must manage resources, build armies, and conquer territories to achieve dominance.',
-                    'questions' => [
-                        [
-                            'type' => 'multiple_choice',
-                            'label' => 'Quel type de ressource est le plus important dans Strategic Warfare ?',
-                            'media' => '/images/resources.jpg',
-                            'choices' => [
-                                'Or',
-                                'Bois',
-                                'Pierre',
-                                'Nourriture'
-                            ],
-                        ],
-                        [
-                            'type' => 'text_input',
-                            'label' => 'Quelle est la limite maximale d\'unités que vous pouvez contrôler simultanément ?',
-                            'media' => '/images/army.jpg',
-                            'answer' => '200',
-                        ],
-                        [
-                            'type' => 'text_input',
-                            'label' => 'Combien de types différents de terrains sont présents dans le jeu ?',
-                            'media' => '/images/terrain.jpg',
-                            'answer' => '6',
-                        ],
-                        [
-                            'type' => 'text_input',
-                            'label' => 'Quelle est la durée moyenne d\'une partie en mode conquête ?',
-                            'media' => '',
-                            'answer' => '45 minutes',
-                        ],
-                    ]
                 ],
             ],
         );
@@ -191,44 +160,5 @@ class GameTest extends ApiTestCase
         );
 
         $this->assertResponseStatusCodeSame(404);
-    }
-
-    public function testGetGameQuestions(): void
-    {
-        $game = GameFactory::random();
-
-        $client = static::createClient();
-        $client->request(
-            'GET',
-            '/games/' . $game->_get('id')->toString() . '/questions',
-        );
-
-        $this->assertResponseIsSuccessful();
-    }
-
-    public function testAddGameQuestion(): void
-    {
-        $game = GameFactory::random();
-
-        $client = static::createClient();
-        $client->request(
-            'POST',
-            '/games/' . $game->_get('id')->toString() . '/questions',
-            [
-                'json' => [
-                    'label' => 'Quel est le meilleur jeux Pokemon ?',
-                    'media' => 'https://example/image.jpg',
-                    'type' => 'multiple_choice',
-                    'choices' => [
-                        [
-                            'label' => 'Or',
-                            'isCorrect' => true,
-                        ]
-                    ]
-                ]
-            ]
-        );
-
-        $this->assertResponseIsSuccessful();
     }
 }

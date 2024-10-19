@@ -47,19 +47,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, UserReward>
      */
-    #[ORM\JoinTable]
-    #[ORM\JoinColumn]
-    #[ORM\InverseJoinColumn(unique: true)]
-    #[ORM\ManyToMany(targetEntity: UserReward::class, orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: UserReward::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $userRewards;
 
     /**
      * @var Collection<int, UserAvatar>
      */
-    #[ORM\JoinTable]
-    #[ORM\JoinColumn]
-    #[ORM\InverseJoinColumn(unique: true)]
-    #[ORM\ManyToMany(targetEntity: UserAvatar::class, orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: UserAvatar::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $userAvatars;
 
     /**
@@ -166,6 +160,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->userRewards->contains($userReward)) {
             $this->userRewards->add($userReward);
+            $userReward->setUser($this);
         }
 
         return $this;
@@ -173,19 +168,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeUserReward(UserReward $userReward): static
     {
-       $this->userRewards->removeElement($userReward);
-
-        return $this;
-    }
-
-    public function getLevel(): ?Level
-    {
-        return $this->level;
-    }
-
-    public function setLevel(?Level $level): static
-    {
-        $this->level = $level;
+        if ($this->userRewards->removeElement($userReward)) {
+            // set the owning side to null (unless already changed)
+            if ($userReward->getUser() === $this) {
+                $userReward->setUser(null);
+            }
+        }
 
         return $this;
     }
@@ -202,6 +190,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->userAvatars->contains($userAvatar)) {
             $this->userAvatars->add($userAvatar);
+            $userAvatar->setUser($this);
         }
 
         return $this;
@@ -209,7 +198,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeUserAvatar(UserAvatar $userAvatar): static
     {
-        $this->userAvatars->removeElement($userAvatar);
+        if ($this->userAvatars->removeElement($userAvatar)) {
+            // set the owning side to null (unless already changed)
+            if ($userAvatar->getUser() === $this) {
+                $userAvatar->setUser(null);
+            }
+        }
 
         return $this;
     }

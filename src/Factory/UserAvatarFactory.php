@@ -15,6 +15,7 @@ final class UserAvatarFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
+            'user' => UserFactory::random(),
             'avatar' => AvatarFactory::random(),
             'unlockedAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
         ];

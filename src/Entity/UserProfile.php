@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 class UserProfile
@@ -17,18 +18,23 @@ class UserProfile
     private ?Uuid $id = null;
 
     #[ORM\Column]
+    #[Assert\NotNull, Assert\PositiveOrZero]
     private ?int $totalPoints = 0;
 
     #[ORM\Column]
+    #[Assert\NotNull, Assert\PositiveOrZero]
     private ?int $experiencePoints = 0;
 
     #[ORM\Column]
+    #[Assert\NotNull, Assert\Positive]
     private ?int $level = 1;
 
     #[ORM\Column]
+    #[Assert\NotNull, Assert\PositiveOrZero]
     private ?int $gamesPlayed = 0;
 
     #[ORM\Column]
+    #[Assert\NotNull]
     private ?float $accuracyRate = 0.0;
 
     #[ORM\ManyToOne]

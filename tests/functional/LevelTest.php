@@ -67,7 +67,7 @@ class LevelTest extends ApiTestCase
                 'headers' => ['Content-Type' => 'application/json'],
                 'json' => [
                     'number' => 1,
-                    'requiredPoints' => 50,
+                    'experienceRequired' => 50,
                 ],
             ],
         );
@@ -125,7 +125,7 @@ class LevelTest extends ApiTestCase
                 'headers' => ['Content-Type' => 'application/merge-patch+json'],
                 'json' => [
                     // 'requiredPoints' should be an integer
-                    'requiredPoints' => '500',
+                    'experienceRequired' => '500',
                 ],
             ],
         );
